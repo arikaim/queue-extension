@@ -1,0 +1,19 @@
+{
+    "title": "Queue",
+    "name": "queue",
+    "package-type": "extension",
+    "class": "Queue",
+    "type": "system",
+    "description": "Control Panel Queue",
+    "short-description": "Queue",
+    "version": "1.0.0",
+    "position": "1",
+    "repository": "https://github.com/arikaim/queue-extension.git",
+    "admin-menu": {        
+        "title": "Queue",
+        "icon": "cogs",       
+        "page-icon": "cogs",
+        "page-title": "Queue", 
+        "component": "queue::admin"
+    }
+}

@@ -1,0 +1,11 @@
+{% set items = [ 
+    { id: 'jobs_button', title: labels.jobs, component: 'queue::admin.jobs', icon: 'tasks', active: true },     
+    { id: 'settings_button', title: labels.settings, component: 'queue::admin.settings', icon: 'cog' }  
+] %}
+
+{{  component('components:tabs',{ 
+        items: items,
+        menu: { component: 'system:admin.extensions.menu.actions', extension: 'queue' },
+        content: { component: 'queue::admin.jobs' } 
+    })
+}}

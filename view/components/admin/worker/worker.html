@@ -1,0 +1,23 @@
+{% set status = 1 %}
+{% set status_title = (status == 1) ? labels.running : labels.stopped %}
+{% set status_icon = (status == 1) ? 'olive check' : 'delete orange' %}
+
+<div class="ui buttons">               
+    <div class="ui basic icon button" tltle="{{ status_title }}">
+        <i class="icon {{ status_icon }}" id="worker_status_icon"></i>
+        {{ labels.worker }}                    
+    </div>
+    <div class="ui basic dropdown icon button" id="worker_dropdown">
+        <i class="dropdown icon"></i>                   
+        <div class="menu">
+            <div class="item" data-value="1">
+                <i class="check olive icon"></i> 
+                {{ labels.start }}
+            </div>
+            <div class="item" data-value="0">
+                <i class="delete orange icon"></i> 
+                {{ labels.stop }}
+            </div>                      
+        </div>
+    </div>
+</div>

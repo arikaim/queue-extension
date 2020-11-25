@@ -1,0 +1,15 @@
+<div class="ui segment">
+    <div class="ui grid">
+        <div class="one wide column">
+            {{ component('queue::admin.worker') }}
+        </div>
+    </div>
+</div>
+<div class="mt-8">
+    <div class="ui middle aligned divided list">
+        {{ component('queue::admin.jobs.items') }}
+    </div>
+    <div id="paginator">
+        {{ component('components:paginator',{ namespace: 'jobs' }) }}
+    </div>
+</div>

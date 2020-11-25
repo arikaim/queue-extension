@@ -1,0 +1,14 @@
+{% set jobs = createModel('Jobs') %}
+{% set items = paginate(jobs,'jobs') %}
+{% set items = items.getItems() %}
+{% if items|length == 0 %}
+    <div class="item">
+        {{ labels.empty }}
+    </div>
+{% endif %}
+
+{% for job in items.getItems() %}
+    <div class="item">
+        {{ job|dump }}
+    </div>
+{% endfor %}

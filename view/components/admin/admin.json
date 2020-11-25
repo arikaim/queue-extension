@@ -1,0 +1,12 @@
+{
+    "messages": {
+        "remove": {
+            "title": "Confirm Remove",
+            "content": "Confirm remove job '<b><% title %></b>'."
+        }        
+    },
+    "labels": {       
+        "jobs": "Jobs",       
+        "settings": "Settings"       
+    }  
+}
