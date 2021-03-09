@@ -1,0 +1,22 @@
+{
+    "title": "Job Details",
+    "labels": {
+        "id": "Id",
+        "suspend": "Suspend",
+        "enable": "Enable",
+        "name": "Name",
+        "all": "All",
+        "type": "Type",
+        "status": "Status",
+        "interval": "Interval",
+        "handler": "Handler",
+        "recurring": "Recurring",
+        "scheduled": "Scheduled",
+        "priority": "Priority",
+        "executed": "Executed",       
+        "worker": "Worker",
+        "extension": "Extension",
+        "date": "Created",
+        "config": "Config"
+    }
+}

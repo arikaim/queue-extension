@@ -1,0 +1,24 @@
+{% if status == constant('Arikaim\\Core\\Interfaces\\Job\\JobInterface::STATUS_CREATED') %}
+    {% set label = labels.created %}
+{% elseif status == constant('Arikaim\\Core\\Interfaces\\Job\\JobInterface::STATUS_PENDING') %}
+    {% set label = labels.pending %}
+    {% set color = 'blue' %}
+{% elseif status == constant('Arikaim\\Core\\Interfaces\\Job\\JobInterface::STATUS_COMPLETED') %}
+    {% set label = labels.completed %}
+    {% set color = 'green' %}
+{% elseif status == constant('Arikaim\\Core\\Interfaces\\Job\\JobInterface::STATUS_EXECUTED') %}
+    {% set label = labels.executed %}
+    {% set color = 'olive' %}
+{% elseif status == constant('Arikaim\\Core\\Interfaces\\Job\\JobInterface::STATUS_SUSPENDED') %}
+    {% set label = labels.suspended %}
+    {% set color = 'orange' %} 
+{% elseif status == constant('Arikaim\\Core\\Interfaces\\Job\\JobInterface::STATUS_ERROR') %}
+    {% set label = labels.error %}
+    {% set color = 'red' %}   
+{% endif %}
+<div class="ui label {{ color }} {{ class }}">
+    {% if icon is not empty %}
+        <i class="icon {{ icon }}"></i>
+    {% endif %}
+    {{ label }}
+</div>

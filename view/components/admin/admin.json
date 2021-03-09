@@ -6,7 +6,8 @@
         }        
     },
     "labels": {       
-        "jobs": "Jobs",       
+        "cron": "Cron",  
+        "queue": "Queue Worker",     
         "settings": "Settings"       
     }  
 }

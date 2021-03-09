@@ -1,9 +1,9 @@
 {
     "labels": {
-        "start": "Sart",
-        "worker": "Queue Worker",
-        "stop": "Stop",
-        "running": "Running",
-        "stoped": "Stopped"
+        "details": "Details",       
+        "demo": "Demo mode"    
+    },
+    "buttons": {      
+        "test": "Check"
     }
 }

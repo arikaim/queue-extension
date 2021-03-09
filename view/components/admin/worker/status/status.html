@@ -1,0 +1,37 @@
+{% set worker_name = worker_name|default('cron') %}
+{% if worker_name != 'cron' %}
+    {% set worker_name = getOption('queue.worker.name') %}
+    {% set worker = service('driver').create(worker_name) %}    
+{% else %}
+    {% set worker = service('queue').createWorkerManager() %}  
+{% endif %}
+
+<h3 class="header">
+    {% if worker.isRunning() == true %}    
+        <i class="check olive icon" title="{{ labels.running }}"></i>                   
+    {% else %}  
+        <i class="exclamation triangle orange icon" title="{{ labels.disabled }}"></i>
+    {% endif %}
+    {{ worker.getTitle() }}
+</h3>
+<p class="mt-4 p-2">
+    {{ worker.getDescription() }}
+</p>
+
+{% if demo_mode == true %}
+    <div class="ui warning message">
+        {{ labels.demo }}
+    </div>
+{% elseif worker_name == 'cron' %}
+    {% if worker.isRunning() == true %}
+        <button class="ui basic button" id="stop_worker" worker-name="{{ worker_name }}">
+            <i class="icon orange stop"></i>
+            {{ buttons.stop }}
+        </button>
+    {% else %}
+        <button class="ui basic button" id="start_worker" worker-name="{{ worker_name }}">
+            <i class="play icon olive"></i>
+            {{ buttons.run }}
+        </button>
+    {% endif %}
+{% endif %}

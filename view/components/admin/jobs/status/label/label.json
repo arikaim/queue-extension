@@ -1,0 +1,10 @@
+{
+    "labels": {
+        "created": "Created",
+        "pending": "Pending",
+        "completed": "Completed",
+        "executed": "Executed",
+        "suspended": "Suspended",
+        "error": "Error"
+    }
+}

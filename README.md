@@ -11,6 +11,7 @@ Queue extension
   
 
 #### Install
+
 ```sh
 composer require arikaim/queue-extension
 ```

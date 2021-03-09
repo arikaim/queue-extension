@@ -4,16 +4,21 @@
     "package-type": "extension",
     "class": "Queue",
     "type": "system",
-    "description": "Control Panel Queue",
+    "description": "Control Panel jobs queue manager",
     "short-description": "Queue",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "position": "1",
     "repository": "https://github.com/arikaim/queue-extension.git",
     "admin-menu": {        
-        "title": "Queue",
+        "title": "Jobs Queue",
         "icon": "cogs",       
         "page-icon": "cogs",
-        "page-title": "Queue", 
+        "page-title": "Jobs Queue", 
         "component": "queue::admin"
+    },
+    "require": {
+        "modules": [
+            "reeactphp:optional"           
+        ]
     }
 }

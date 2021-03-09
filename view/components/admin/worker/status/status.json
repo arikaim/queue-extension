@@ -1,0 +1,15 @@
+{
+    "labels": {
+        "details": "Details",
+        "start": "Sart",      
+        "stop": "Stop",
+        "running": "Running",
+        "stoped": "Stopped",           
+        "disabled": "Disabled",     
+        "demo": "Demo mode"    
+    },
+    "buttons": {      
+        "run": "Run",
+        "stop": "Stop"
+    }
+}

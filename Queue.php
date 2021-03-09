@@ -12,7 +12,7 @@ namespace Arikaim\Extensions\Queue;
 use Arikaim\Core\Extension\Extension;
 
 /**
- * Queue class
+ * Queue extension class
  */
 class Queue extends Extension
 {
@@ -24,8 +24,17 @@ class Queue extends Extension
     public function install()
     {
         // Control Panel
-       // $this->addApiRoute('PUT','/api/blog/admin/post/add','PostControlPanel','add','session');   
-        $this->addApiRoute('PUT','/api/queue/admin/job/update','QueueControlPanel','update','session'); 
+        $this->addApiRoute('PUT','/api/queue/admin/start','QueueControlPanel','start','session'); 
+        $this->addApiRoute('PUT','/api/queue/admin/stop','QueueControlPanel','stop','session'); 
+        $this->addApiRoute('GET','/api/queue/admin/status[/{name}]','QueueControlPanel','getStatus','session'); 
+        // jobs
+        $this->addApiRoute('PUT','/api/queue/admin/job/status','JobsControlPanel','setStatus','session'); 
+        $this->addApiRoute('DELETE','/api/queue/admin/job/delete/{uuid}','JobsControlPanel','deleteJob','session'); 
+        $this->addApiRoute('POST','/api/queue/admin/job/config','JobsControlPanel','saveConfig','session'); 
+ 
+        // Options
+        $this->createOption('queue.worker.pid',null); 
+        $this->createOption('queue.worker.name',null); 
     }
     
     /**

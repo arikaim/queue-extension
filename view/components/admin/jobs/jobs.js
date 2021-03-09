@@ -6,54 +6,33 @@
  */
 'use strict';
 
-function JobsView() {
-    var self = this;
+function Jobs() {
 
-    this.init = function() {     
-       $('#worker_dropdown').dropdown({
-            onChange: function(value) {
-                if (value == 1) {
-                    $('#worker_status_icon').attr('class','icon olive check');
-                } else {
-                    $('#worker_status_icon').attr('class','icon delete orange');
-                }
-            }
-       });
+    this.enable = function(uuid, onSuccess, onError) {
+        var data = { 
+            uuid: uuid,
+            status: 1 
+        };
+        
+        return arikaim.put('/api/queue/admin/job/status',data,onSuccess,onError)
     };
 
-    this.showJobsList = function() {
-        return arikaim.page.loadContent({
-            id: 'jobs_list',           
-            component: 'queue::admin.jobs.items'            
-        },function(result) {
-            self.initRows();
-        });  
+    this.disable = function(uuid, onSuccess, onError) {
+        var data = { 
+            uuid: uuid,
+            status: 5 // Suspended 
+        };
+
+        return arikaim.put('/api/queue/admin/job/status',data,onSuccess,onError);           
     };
 
-    this.initRows = function() {
-        var component = arikaim.component.get('queue::admin');
-        var removeMessage = component.getProperty('messages.page.content');
-
-        arikaim.ui.button('.delete-jobs',function(element) {
-            var uuid = $(element).attr('uuid');
-            var title = $(element).attr('data-title');
-
-            var message = arikaim.ui.template.render(removeMessage,{ title: title });
-            modal.confirmDelete({ 
-                title: component.getProperty('messages.page.title'),
-                description: message
-            },function() {
-                queueControlPanel.deleteJob(uuid,function(result) {
-                    $('#' + uuid).remove();                                 
-                });
-            });
-        });
+    this.delete = function(uuid, onSuccess, onError) {
+        return arikaim.delete('/api/queue/admin/job/delete/' + uuid,onSuccess,onError);           
     };
+
+    this.saveConfig = function(formId, onSuccess, onError) {
+        return arikaim.put('/api/queue/admin/job/config',formId,onSuccess,onError);      
+    }
 }
 
-var jobsView = new JobsView();
-
-arikaim.page.onReady(function() {
-    jobsView.init();
-    jobsView.initRows();
-});
+var jobs = new Jobs();

@@ -1,23 +1,42 @@
-{% set status = 1 %}
-{% set status_title = (status == 1) ? labels.running : labels.stopped %}
-{% set status_icon = (status == 1) ? 'olive check' : 'delete orange' %}
+{% set worker_name = worker_name|default('cron') %}
+{% if worker_name != 'cron' %}
+    {% set worker_name = getOption('queue.worker.name') %}
+    {% set worker = service('driver').create(worker_name) %}    
+{% else %}
+    {% set worker = service('queue').createWorkerManager() %}  
+{% endif %}
 
-<div class="ui buttons">               
-    <div class="ui basic icon button" tltle="{{ status_title }}">
-        <i class="icon {{ status_icon }}" id="worker_status_icon"></i>
-        {{ labels.worker }}                    
+{% set details = worker.getDetails() %}
+<div class="ui divided grid">
+    <div class="four wide column" id="worker_status_content">
+        {{ component('queue::admin.worker.status',{ worker_name: worker_name }) }}
     </div>
-    <div class="ui basic dropdown icon button" id="worker_dropdown">
-        <i class="dropdown icon"></i>                   
-        <div class="menu">
-            <div class="item" data-value="1">
-                <i class="check olive icon"></i> 
-                {{ labels.start }}
-            </div>
-            <div class="item" data-value="0">
-                <i class="delete orange icon"></i> 
-                {{ labels.stop }}
-            </div>                      
+    <div class="twelve wide column">
+        <h4>
+            <i class="icon blue info"></i>
+            {{ labels.details }}
+        </h4>
+        <table class="ui very basic definition table">
+            <tbody>
+                {% for key, value in details %}
+                <tr>
+                    <td class="one wide right aligned">{{ key }}</td>
+                    <td>{{ value }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>      
+        {% if worker_name == 'cron' %}
+        <div class="mt-8">
+            {% if demo_mode != true %}
+            <button class="ui mini basic icon labeled button" id="run-worker-test">
+                <i class="icon play"></i>
+                {{ buttons.test }}
+            </button>
+            {% endif %}
+        </div>      
+        <div class="mt-4" id="worker_test_result">
         </div>
+        {% endif %}
     </div>
-</div>
+</div> 

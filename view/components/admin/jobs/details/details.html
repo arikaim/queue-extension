@@ -1,0 +1,119 @@
+{% set job = createModel('Jobs').findById(uuid) %}
+{% set config = createProperties(job.config) %}
+<div>
+    <h4>{{ title }}</h4>
+    {% if job.status == constant('Arikaim\\Core\\Interfaces\\Job\\JobInterface::STATUS_SUSPENDED') %}
+        <button class="ui basic icon labeled mini button enable-job" uuid="{{ job.uuid }}">
+            <i class="icon play green"></i>
+            {{ labels.enable }}
+        </button>
+    {% else %}
+        <button class="ui basic icon labeled mini button suspend-job" uuid="{{ job.uuid }}">
+            <i class="icon orange stop"></i>
+            {{ labels.suspend }}
+        </button>
+    {% endif %}
+    <div class="mt-2">
+        <table class="ui very basic definition table">
+            <thead>
+                <tr>
+                    <th class="two wide"></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="right aligned">{{ labels.id }}</td>
+                    <td>{{ job.uuid }}</td>
+                </tr>
+                <tr>
+                    <td class="right aligned">{{ labels.name }}</td>
+                    <td>
+                        {{ job.name }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="right aligned">{{ labels.status }}</td>
+                    <td>
+                        {{  component('queue::admin.jobs.status.label',{ 
+                                status: job.status, 
+                                class: 'mini basic right floated' 
+                            }) 
+                        }}  
+                    </td>
+                </tr>
+                <tr>
+                    <td class="right aligned">{{ labels.type }}</td>
+                    <td>
+                        {% if job.isRecurring() == true %}
+                            <span>{{ labels.recurring }}</span>
+                            <div class="ui basic label">
+                                {{ labels.interval }}
+                                <span class="p-1">
+                                    {{ job.recuring_interval }}
+                                </span>
+                            </div>                           
+                        {% endif %}
+                        {% if job.isScheduled() == true %}
+                            <span>{{ labels.scheduled }}</span>
+                            <div class="ui basic label">
+                                <i class="icon blue outline calendar"></i>
+                                {{ job.schedule_time|dateTimeFormat }}
+                            </div>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="right aligned">{{ labels.priority }}</td>
+                    <td>
+                        {{ job.priority }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="right aligned">{{ labels.date }}</td>
+                    <td>
+                        {{ job.date_created|dateTimeFormat }}
+                    </td>
+                </tr>
+                {% if job.date_executed is not empty %}
+                <tr>
+                    <td class="right aligned">{{ labels.executed }}</td>
+                    <td>
+                        {% if job.executed > 0 %}
+                        <div class="ui basic label">
+                            {{ job.executed }}
+                        </div>
+                        {% endif %}
+                        <div class="ui basic label">
+                            <i class="icon blue outline calendar"></i>
+                            {{ job.date_executed|dateTimeFormat }}
+                        </div>                        
+                    </td>
+                </tr>
+                {% endif %}
+                <tr>
+                    <td class="right aligned">{{ labels.handler }}</td>
+                    <td>
+                        {{ job.handler_class }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="right aligned">{{ labels.extension }}</td>
+                    <td>
+                        {{ job.extension_name}}
+                    </td>
+                </tr>    
+                <tr>
+                    <td class="right aligned">{{ labels.worker }}</td>
+                    <td>
+                        {{ (job.queue is null) ? labels.all : job.queue }}
+                    </td>
+                </tr> 
+            </tbody>  
+        </table>     
+    </div>
+    <div class="mt-2">
+        <h4>{{ labels.config }}</h4>
+        {{ component('components:properties.view',{ properties: config }) }} 
+    </div>
+</div>

@@ -1,5 +1,6 @@
-{% set jobs = createModel('Jobs') %}
+{% set jobs = createModel('Jobs').orderBy('id') %}
 {% set items = paginate(jobs,'jobs') %}
+
 {% set items = items.getItems() %}
 {% if items|length == 0 %}
     <div class="item">
@@ -7,8 +8,6 @@
     </div>
 {% endif %}
 
-{% for job in items.getItems() %}
-    <div class="item">
-        {{ job|dump }}
-    </div>
+{% for job in items %}
+    {{ component('queue::admin.jobs.view.item',{ job: job }) }}   
 {% endfor %}
