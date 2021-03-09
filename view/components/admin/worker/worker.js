@@ -25,6 +25,10 @@ function WorkerManager() {
         return arikaim.put('/api/queue/admin/stop',data,onSuccess,onError);          
     };
 
+    this.runCronCommand = function(onSuccess, onError) {
+        return arikaim.put('/api/queue/admin/cron/run',{},onSuccess,onError);          
+    };
+
     this.status = function(onSuccess, onError) {
         return arikaim.get('/api/queue/admin/status',onSuccess, onError);          
     };
@@ -56,13 +60,13 @@ function WorkerManager() {
             });
         });
 
-        arikaim.ui.button('#run-worker-test',function(element) {
-            $('#cron_run_result').html('');
+        arikaim.ui.button('#run_cron_command',function(element) {
+            $('#worker_test_result').html('');
 
-            return self.start(function(result) {
-                $('#cron_run_result').html(result.output);
+            return self.runCronCommand(function(result) {
+                $('#worker_test_result').html(result.output);
             },function(error) {
-                $('#cron_run_result').html(error);
+                $('#worker_test_result').html(error);
             });
         });
     };

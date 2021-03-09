@@ -10,6 +10,7 @@
 namespace Arikaim\Extensions\Queue\Controllers;
 
 use Arikaim\Core\Controllers\ControlPanelApiController;
+use Arikaim\Core\Queue\Cron;
 
 /**
  * Category control panel controler
@@ -116,5 +117,24 @@ class QueueControlPanel extends ControlPanelApiController
             },'errors.worker.stop');
         });
         $data->validate();        
+    }
+
+     /**
+     * Run cron command
+     *
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param Validator $data
+     * @return Psr\Http\Message\ResponseInterface
+     */
+    public function runCronCommandController($request, $response, $data)
+    {         
+        $output = Cron::runCronCommand();
+
+        $this->setResponse(true,function() use($output) {                  
+            $this
+                ->message('cron.run')                   
+                ->field('output',$output);   
+        },'errors.cron.run');                   
     }
 }

@@ -27,6 +27,7 @@ class Queue extends Extension
         $this->addApiRoute('PUT','/api/queue/admin/start','QueueControlPanel','start','session'); 
         $this->addApiRoute('PUT','/api/queue/admin/stop','QueueControlPanel','stop','session'); 
         $this->addApiRoute('GET','/api/queue/admin/status[/{name}]','QueueControlPanel','getStatus','session'); 
+        $this->addApiRoute('PUT','/api/queue/admin/cron/run','QueueControlPanel','runCronCommand','session'); 
         // jobs
         $this->addApiRoute('PUT','/api/queue/admin/job/status','JobsControlPanel','setStatus','session'); 
         $this->addApiRoute('DELETE','/api/queue/admin/job/delete/{uuid}','JobsControlPanel','deleteJob','session'); 
