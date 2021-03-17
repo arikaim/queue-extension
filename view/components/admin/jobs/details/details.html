@@ -60,8 +60,7 @@
                                 <i class="icon blue outline calendar"></i>
                                 {{ job.schedule_time|dateTimeFormat }}
                             </div>
-                        {% endif %}
-                        due  {{  job.due_date }}
+                        {% endif %}                     
                         {% if job.due_date is not empty %}
                             <div class="ui basic label">
                                 <span>{{ labels.nextrun }}</span>                               
