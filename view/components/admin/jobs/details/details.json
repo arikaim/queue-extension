@@ -6,6 +6,7 @@
         "enable": "Enable",
         "name": "Name",
         "all": "All",
+        "nextrun": "Next Run",
         "type": "Type",
         "status": "Status",
         "interval": "Interval",

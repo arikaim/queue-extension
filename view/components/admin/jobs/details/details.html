@@ -61,6 +61,16 @@
                                 {{ job.schedule_time|dateTimeFormat }}
                             </div>
                         {% endif %}
+                        due  {{  job.due_date }}
+                        {% if job.due_date is not empty %}
+                            <div class="ui basic label">
+                                <span>{{ labels.nextrun }}</span>                               
+                                <div class="detail">
+                                    <i class="icon outline calendar blue"></i>
+                                    {{ job.due_date|dateTimeFormat }}
+                                </td>
+                            </div>
+                        {% endif %} 
                     </td>
                 </tr>
                 <tr>
