@@ -1,0 +1,16 @@
+{% if uuid is not empty %}
+    {% set job = createModel('Jobs').findById(uuid) %}
+    {% set config = createProperties(job.config) %}
+{% endif %}
+{% if config is iterable %}
+    <h4>{{ title }}</h4>
+    <div class="p-1 m-1">
+        <button class="ui basic icon labeled mini button edit-job-config" uuid="{{ job.uuid }}">
+            <i class="icon blue edit"></i>
+            {{ labels.edit }}
+        </button>
+    </div>
+    <div>
+        {{ component('components:properties.view',{ properties: config }) }} 
+    </div>          
+{% endif %}

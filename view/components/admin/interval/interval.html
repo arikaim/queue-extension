@@ -1,0 +1,25 @@
+{% if selected is not empty %}
+    {% for item in items %}
+        {% if (item.interval == selected) %}
+            {% set selected_title = item.title %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+{% set selected_title = selected_title|default(labels.empty) %}
+
+<div class="ui dropdown interval-dropdown {{ class }}">
+    <div class="text">
+        {{ selected_title }}     
+    </div>
+    <i class="dropdown icon"></i>   
+    <div class="ui menu">
+        {% for item in items %}
+            {% if item.interval not in skip %}          
+                <div class="item" data-value="{{ item.interval }}">                        
+                    {{ item.title }}
+                </div>   
+            {% endif %} 
+        {% endfor %}           
+    </div>
+</div>

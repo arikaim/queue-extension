@@ -16,7 +16,6 @@
         "executed": "Executed",       
         "worker": "Worker",
         "extension": "Extension",
-        "date": "Created",
-        "config": "Config"
+        "date": "Created"      
     }
 }

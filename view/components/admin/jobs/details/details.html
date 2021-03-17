@@ -112,8 +112,9 @@
             </tbody>  
         </table>     
     </div>
-    <div class="mt-2">
-        <h4>{{ labels.config }}</h4>
-        {{ component('components:properties.view',{ properties: config }) }} 
+    <div class="mt-2" id="job_config_content">
+        {% if config is iterable %}
+            {{ component('queue::admin.jobs.config.view',{ config: config, uuid: job.uuid }) }}                
+        {% endif %}
     </div>
 </div>

@@ -1,0 +1,9 @@
+{
+    "jobs": {
+        "config": "Job config saved successfully.", 
+        "status": "Job status changed successfully."
+    },
+    "errors": {             
+        "config": "Error saving job config"   
+    }
+}

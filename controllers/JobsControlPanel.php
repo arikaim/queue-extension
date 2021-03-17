@@ -97,8 +97,36 @@ class JobsControlPanel extends ControlPanelApiController
             $config->setPropertyValues($data->toArray());
 
             $result = $this->get('queue')->saveJobConfig($jobName,$config->toArray());
-        
-            $this->setResponse($result,'jobs.config','errors.jobs.config');
+            
+            $this->setResponse($result,function() use($job) {                  
+                $this
+                    ->message('jobs.config')                  
+                    ->field('uuid',$job['uuid']);   
+            },'errors.jobs.config');          
+        });
+        $data->validate();       
+    }
+
+    /**
+     * Save job interval
+     *
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param Validator $data
+     * @return Psr\Http\Message\ResponseInterface
+    */
+    public function saveIntervalController($request, $response, $data)
+    {
+        $this->onDataValid(function($data) {            
+            $jobName = $data->get('name');           
+
+            $job = $this->get('queue')->getJob($jobName);           
+                     
+            $this->setResponse(false,function() use($job) {                  
+                $this
+                    ->message('jobs.interval')                  
+                    ->field('uuid',$job['uuid']);   
+            },'errors.jobs.interval');          
         });
         $data->validate();       
     }

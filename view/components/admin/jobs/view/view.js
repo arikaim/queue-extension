@@ -37,6 +37,7 @@ function JobsView() {
     };
 
     this.initDetails = function() {
+
         arikaim.ui.button('.suspend-job',function(element) {
             var uuid = $(element).attr('uuid');
 
