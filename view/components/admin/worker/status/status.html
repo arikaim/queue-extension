@@ -22,7 +22,7 @@
     <div class="ui warning message">
         {{ labels.demo }}
     </div>
-{% elseif worker_name == 'cron' %}
+{% else  %}
     {% if worker.isRunning() == true %}
         <button class="ui basic button" id="stop_worker" worker-name="{{ worker_name }}">
             <i class="icon orange stop"></i>

@@ -24,16 +24,20 @@ class Queue extends Extension
     public function install()
     {
         // Control Panel
-        $this->addApiRoute('PUT','/api/queue/admin/start','QueueControlPanel','start','session'); 
-        $this->addApiRoute('PUT','/api/queue/admin/stop','QueueControlPanel','stop','session'); 
-        $this->addApiRoute('GET','/api/queue/admin/status[/{name}]','QueueControlPanel','getStatus','session'); 
-        $this->addApiRoute('PUT','/api/queue/admin/cron/run','QueueControlPanel','runCronCommand','session'); 
+        $this->addApiRoute('PUT','/api/admin/queue/start','QueueControlPanel','start','session'); 
+        $this->addApiRoute('PUT','/api/admin/queue/stop','QueueControlPanel','stop','session'); 
+        $this->addApiRoute('GET','/api/admin/queue/status[/{name}]','QueueControlPanel','getStatus','session'); 
+        $this->addApiRoute('PUT','/api/admin/queue/cron/run','QueueControlPanel','runCronCommand','session'); 
         // jobs
-        $this->addApiRoute('PUT','/api/queue/admin/job/status','JobsControlPanel','setStatus','session'); 
-        $this->addApiRoute('DELETE','/api/queue/admin/job/delete/{uuid}','JobsControlPanel','deleteJob','session'); 
-        $this->addApiRoute('PUT','/api/queue/admin/job/config','JobsControlPanel','saveConfig','session'); 
-        $this->addApiRoute('PUT','/api/queue/admin/job/config/interval','JobsControlPanel','updateInterval','session'); 
+        $this->addApiRoute('PUT','/api/admin/queue/job/status','JobsControlPanel','setStatus','session'); 
+        $this->addApiRoute('DELETE','/api/admin/queue/job/delete/{uuid}','JobsControlPanel','deleteJob','session'); 
+        $this->addApiRoute('PUT','/api/admin/queue/job/config','JobsControlPanel','saveConfig','session'); 
+        $this->addApiRoute('PUT','/api/admin/queue/job/config/interval','JobsControlPanel','updateInterval','session'); 
  
+        // Console
+        $this->registerConsoleCommand('StopWorkerCommand');        
+        $this->registerConsoleCommand('StartWorkerCommand');     
+
         // Options
         $this->createOption('queue.worker.pid',null); 
         $this->createOption('queue.worker.name',null); 

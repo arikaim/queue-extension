@@ -14,7 +14,7 @@ function WorkerManager() {
             name: name
         };
 
-        return arikaim.put('/api/queue/admin/start',data,onSuccess,onError);          
+        return arikaim.put('/api/admin/queue/start',data,onSuccess,onError);          
     };
 
     this.stop = function(name, onSuccess, onError) {
@@ -22,15 +22,15 @@ function WorkerManager() {
             name: name
         };
 
-        return arikaim.put('/api/queue/admin/stop',data,onSuccess,onError);          
+        return arikaim.put('/api/admin/queue/stop',data,onSuccess,onError);          
     };
 
     this.runCronCommand = function(onSuccess, onError) {
-        return arikaim.put('/api/queue/admin/cron/run',{},onSuccess,onError);          
+        return arikaim.put('/api/admin/queue/cron/run',{},onSuccess,onError);          
     };
 
     this.status = function(onSuccess, onError) {
-        return arikaim.get('/api/queue/admin/status',onSuccess, onError);          
+        return arikaim.get('/api/admin/queue/status',onSuccess, onError);          
     };
 
     this.loadWorkerStatus = function(name) {

@@ -14,7 +14,7 @@ function Jobs() {
             status: 1 
         };
         
-        return arikaim.put('/api/queue/admin/job/status',data,onSuccess,onError)
+        return arikaim.put('/api/admin/queue/job/status',data,onSuccess,onError)
     };
 
     this.disable = function(uuid, onSuccess, onError) {
@@ -23,15 +23,15 @@ function Jobs() {
             status: 5 // Suspended 
         };
 
-        return arikaim.put('/api/queue/admin/job/status',data,onSuccess,onError);           
+        return arikaim.put('/api/admin/queue/job/status',data,onSuccess,onError);           
     };
 
     this.delete = function(uuid, onSuccess, onError) {
-        return arikaim.delete('/api/queue/admin/job/delete/' + uuid,onSuccess,onError);           
+        return arikaim.delete('/api/admin/queue/job/delete/' + uuid,onSuccess,onError);           
     };
 
     this.saveConfig = function(formId, onSuccess, onError) {
-        return arikaim.put('/api/queue/admin/job/config',formId,onSuccess,onError);      
+        return arikaim.put('/api/admin/queue/job/config',formId,onSuccess,onError);      
     }
 }
 
