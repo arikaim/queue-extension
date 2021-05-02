@@ -24,7 +24,7 @@ class JobsControlPanel extends ControlPanelApiController
      */
     public function init()
     {
-        $this->loadMessages('queue:admin.messages');
+        $this->loadMessages('queue::admin.messages');
     }
 
     /**

@@ -1,4 +1,7 @@
 {% set job = createModel('Jobs').findById(uuid) %}
+{% if job is empty %}
+    {% set job = service('queue').getJob(uuid) %}
+{% endif %}
 {% set config = createProperties(job.config) %}
 
 <div class="ui segment">

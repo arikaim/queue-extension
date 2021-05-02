@@ -1,0 +1,15 @@
+{% set job = service('queue').getJob(job_name) %}
+{% if title is empty %}
+    {% set title = labels.enable ~ ' ' ~ job_name ~ ' ' ~ labels.job %}
+{% endif %}
+{% if job is not empty %}
+    <div class="ui toggle checkbox job-status-toggle {{ (disabled == true) ? 'disabled' : '' }}" id="job_status_toggle">
+        <input type="checkbox" {{ ( job.status != 5) ? 'checked' : '' }} uuid="{{ job.uuid }}" value="1">
+        <label class="font-bold">{{ title }}</label>
+        <span class="ml-16 pl-1 text-gray-700">{{ description }}</span>
+    </div> 
+{% else %}
+    <div class="ui warning message">
+        {{ error }}
+    </div>
+{% endif %}
