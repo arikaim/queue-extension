@@ -130,4 +130,28 @@ class JobsControlPanel extends ControlPanelApiController
         });
         $data->validate();       
     }
+
+    /**
+     * Run job 
+     *
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param Validator $data
+     * @return Psr\Http\Message\ResponseInterface
+    */
+    public function runController($request, $response, $data)
+    {
+        $this->onDataValid(function($data) {            
+            $jobName = $data->get('name');           
+
+            $job = $this->get('queue')->execute($jobName);
+                     
+            $this->setResponse(\is_object($job),function() use($job) {                  
+                $this
+                    ->message('jobs.run')                  
+                    ->field('uuid',$job->getId());   
+            },'errors.jobs.run');          
+        });
+        $data->validate();  
+    }
 }

@@ -1,0 +1,12 @@
+<div class="ui selection dropdown job-status-dropdown {{ class }}" {{ title|attr('title') }} {{ id|attr('id') }}>    
+    <input {{ rule|attr('rule') }} name="{{ name }}" type="hidden" value="{{ item_selected[data_field] }}">  
+    <div class="text">
+        {{ item_selected.name|default(labels.choose) }}
+    </div>  
+    <i class="icon dropdown"></i> 
+    <div class="menu">        
+        <div class="item" data-value="{{ item[data_field] }}">  
+            {{ item.name }}
+        </div>        
+    </div>
+</div>

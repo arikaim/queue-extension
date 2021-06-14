@@ -64,19 +64,31 @@ function JobsView() {
                 $('#job_details').html('');
             });
         });
+
+        arikaim.ui.button('.run-job',function(element) {
+            var uuid = $(element).attr('uuid');
+
+            return jobs.run(uuid,function(result) {
+                self.loadDetails(result.uuid);                
+            });
+        });
     };
 
     this.initRows = function() {
         arikaim.ui.button('.job-details',function(element) {
             var uuid = $(element).attr('uuid');
             
-            return arikaim.page.loadContent({
-                id: 'job_details',           
-                component: 'queue::admin.jobs.details',
-                params: { uuid: uuid }            
-            });  
+            self.loadDetails(uuid);
         });
     };
+
+    this.loadDetails = function(uuid) {
+        return arikaim.page.loadContent({
+            id: 'job_details',           
+            component: 'queue::admin.jobs.details',
+            params: { uuid: uuid }            
+        });  
+    }
 }
 
 var jobsView = createObject(JobsView,ControlPanelView);

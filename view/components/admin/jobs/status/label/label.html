@@ -1,3 +1,7 @@
+{% if uuid is not empty %}
+    {% set job = service('queue').getJob(uuid) %}
+    {% set status = job.status %}
+{% endif %}
 {% if status == constant('Arikaim\\Core\\Interfaces\\Job\\JobInterface::STATUS_CREATED') %}
     {% set label = labels.created %}
 {% elseif status == constant('Arikaim\\Core\\Interfaces\\Job\\JobInterface::STATUS_PENDING') %}
@@ -19,6 +23,9 @@
 <div class="ui label {{ color }} {{ class }}">
     {% if icon is not empty %}
         <i class="icon {{ icon }}"></i>
+    {% endif %}
+    {% if title is not empty %}
+        <span class="p-1 font-bold">{{ title }}</span>
     {% endif %}
     {{ label }}
 </div>

@@ -4,13 +4,19 @@
     <h4>{{ title }}</h4>
     {% if job.status == constant('Arikaim\\Core\\Interfaces\\Job\\JobInterface::STATUS_SUSPENDED') %}
         <button class="ui basic icon labeled mini button enable-job" uuid="{{ job.uuid }}">
-            <i class="icon play green"></i>
+            <i class="icon check green"></i>
             {{ labels.enable }}
         </button>
     {% else %}
         <button class="ui basic icon labeled mini button suspend-job" uuid="{{ job.uuid }}">
             <i class="icon orange stop"></i>
             {{ labels.suspend }}
+        </button>
+    {% endif %}
+    {% if demo_mode != true %}
+        <button class="ui basic icon labeled mini button run-job" uuid="{{ job.uuid }}">
+            <i class="icon play green"></i>
+            {{ labels.run }}
         </button>
     {% endif %}
     <div class="mt-2">

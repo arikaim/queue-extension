@@ -4,6 +4,7 @@
         "id": "Id",
         "suspend": "Suspend",
         "enable": "Enable",
+        "run": "Run",
         "name": "Name",
         "all": "All",
         "nextrun": "Next Run",

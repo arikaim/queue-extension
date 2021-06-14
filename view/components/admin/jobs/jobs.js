@@ -32,7 +32,15 @@ function Jobs() {
 
     this.saveConfig = function(formId, onSuccess, onError) {
         return arikaim.put('/api/admin/queue/job/config',formId,onSuccess,onError);      
-    }
+    };
+
+    this.run = function(name, onSuccess, onError) {
+        var data = { 
+            name: name        
+        };
+        
+        return arikaim.put('/api/admin/queue/job/run',data,onSuccess,onError)
+    };
 }
 
 var jobs = new Jobs();
