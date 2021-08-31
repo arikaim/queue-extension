@@ -9,6 +9,7 @@
         "all": "All",
         "nextrun": "Next Run",
         "type": "Type",
+        "current": "Current Time",
         "status": "Status",
         "interval": "Interval",
         "handler": "Handler",

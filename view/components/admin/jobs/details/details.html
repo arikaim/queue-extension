@@ -58,7 +58,7 @@
                                 <span class="p-1">
                                     {{ job.recuring_interval }}
                                 </span>
-                            </div>                           
+                            </div>                                                                                     
                         {% endif %}
                         {% if job.isScheduled() == true %}
                             <span>{{ labels.scheduled }}</span>
@@ -73,8 +73,15 @@
                                 <div class="detail">
                                     <i class="icon outline calendar blue"></i>
                                     {{ job.due_date|dateTimeFormat }}
-                                </td>
+                                </div>
                             </div>
+                            <div class="ui basic label">
+                                <span>{{ labels.current }}</span>          
+                                <div class="detail">
+                                    <i class="icon outline calendar blue"></i>
+                                    {{ today()|dateTimeFormat }}
+                                </div>
+                            </div>   
                         {% endif %} 
                     </td>
                 </tr>
