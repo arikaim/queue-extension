@@ -34,6 +34,7 @@
         }
     ],
     "labels": {
-        "empty": "Select Interval"
+        "empty": "N/A",
+        "interval": "Interval"
     }   
 }

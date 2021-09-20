@@ -34,6 +34,15 @@ function Jobs() {
         return arikaim.put('/api/admin/queue/job/config',formId,onSuccess,onError);      
     };
 
+    this.updateInterval = function(uuid, interval, onSuccess, onError) {
+        var data = {
+            uuid: uuid,
+            interval: interval
+        };
+
+        return arikaim.put('/api/admin/queue/job/config/interval',data,onSuccess,onError);      
+    };
+
     this.run = function(name, onSuccess, onError) {
         var data = { 
             name: name        

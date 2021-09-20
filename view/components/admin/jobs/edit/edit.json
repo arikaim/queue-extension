@@ -1,0 +1,24 @@
+{
+    "title": "Edit Job",
+    "labels": {
+        "id": "Id",
+        "suspend": "Suspend",
+        "enable": "Enable",
+        "run": "Run",
+        "name": "Name",
+        "all": "All",
+        "nextrun": "Next Run",
+        "type": "Type",
+        "current": "Current Time",
+        "status": "Status",
+        "interval": "Recurring Interval",
+        "handler": "Handler",
+        "recurring": "Recurring",
+        "scheduled": "Scheduled",
+        "priority": "Priority",
+        "executed": "Executed",       
+        "worker": "Worker",
+        "extension": "Extension",
+        "date": "Created"      
+    }
+}

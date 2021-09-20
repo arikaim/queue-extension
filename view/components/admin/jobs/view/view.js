@@ -37,7 +37,6 @@ function JobsView() {
     };
 
     this.initDetails = function() {
-
         arikaim.ui.button('.suspend-job',function(element) {
             var uuid = $(element).attr('uuid');
 
@@ -75,6 +74,16 @@ function JobsView() {
     };
 
     this.initRows = function() {
+        arikaim.ui.button('.edit-job',function(element) {
+            var uuid = $(element).attr('uuid');
+            return arikaim.page.loadContent({
+                id: 'job_details',           
+                component: 'queue::admin.jobs.edit',
+                params: { uuid: uuid }            
+            }); 
+        });
+
+        
         arikaim.ui.button('.job-details',function(element) {
             var uuid = $(element).attr('uuid');
             

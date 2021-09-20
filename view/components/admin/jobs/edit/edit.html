@@ -1,0 +1,13 @@
+{% set job = createModel('Jobs').findById(uuid) %}
+<input type="hidden" value="{{ uuid }}" id="job_uuid">
+<div>
+    <h4>{{ title }}</h4>
+    <div class="mt-5 flex flex-row items-center">
+        <div class="font-bold">
+            {{ labels.interval }}
+        </div>
+        <div class="px-2">                 
+            {{ component('queue::admin.interval',{ class: 'mini selection', selected: job.recuring_interval }) }}
+        </div>
+    </div>
+</div>

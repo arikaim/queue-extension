@@ -2,7 +2,7 @@
 {% if worker is empty and worker != 'cron' %}
     {{ component('components:message.warning',{ message: message }) }}        
 {% else %}
-    <div class="ui segment">
+    <div class="ui segment">       
         {{ component('queue::admin.worker',{ worker_name: worker }) }}      
     </div>
     {{ component('queue::admin.jobs.view',{ worker_name: worker }) }} 

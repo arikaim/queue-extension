@@ -7,6 +7,9 @@
             <i class="icon blue angle right"></i>          
             {{ component('queue::admin.jobs.status.label',{ status: job.status, class: 'mini basic right floated' }) }}           
             {% if job.isRecurring() == true %} 
+                <button class="ui mini basic compact icon button edit-job" uuid="{{ job.uuid }}">
+                    <i class="icon green edit"></i>
+                </button>
                 <i class="redo alternate icon blue" title="{{ labels.recurring }}"></i>
             {% endif %}
             {% if job.isScheduled() == true %}

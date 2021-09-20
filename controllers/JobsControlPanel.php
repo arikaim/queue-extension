@@ -108,23 +108,32 @@ class JobsControlPanel extends ControlPanelApiController
     }
 
     /**
-     * Save job interval
+     * Update job recurring interval
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
      * @param Validator $data
      * @return Psr\Http\Message\ResponseInterface
     */
-    public function saveIntervalController($request, $response, $data)
+    public function updateIntervalController($request, $response, $data)
     {
         $this->onDataValid(function($data) {            
-            $jobName = $data->get('name');           
+            $uuid = $data->get('uuid');           
+            $interval = $data->get('interval'); 
 
-            $job = $this->get('queue')->getJob($jobName);           
-                     
-            $this->setResponse(false,function() use($job) {                  
+            $job = $this->get('queue')->getStorageDriver()->findById($uuid);
+            if (\is_object($job) == false) {
+                $this->error('Not valid job Id.');
+                return false;
+            }       
+            $result = $job->update([
+                'recuring_interval' => $interval
+            ]);   
+
+            $this->setResponse(($result !== false),function() use($job) {                  
                 $this
-                    ->message('jobs.interval')                  
+                    ->message('jobs.interval')  
+                    ->field('interval',$job['recuring_interval'])                
                     ->field('uuid',$job['uuid']);   
             },'errors.jobs.interval');          
         });

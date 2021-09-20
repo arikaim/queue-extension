@@ -53,12 +53,7 @@
                     <td>
                         {% if job.isRecurring() == true %}
                             <span>{{ labels.recurring }}</span>
-                            <div class="ui basic label">
-                                {{ labels.interval }}
-                                <span class="p-1">
-                                    {{ job.recuring_interval }}
-                                </span>
-                            </div>                                                                                     
+                            {{ component('queue::admin.interval.label',{ interval: job.recuring_interval }) }}                                                                                  
                         {% endif %}
                         {% if job.isScheduled() == true %}
                             <span>{{ labels.scheduled }}</span>
