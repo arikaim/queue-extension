@@ -2,8 +2,5 @@
     "labels": {
         "details": "Details",       
         "demo": "Demo mode"    
-    },
-    "buttons": {      
-        "test": "Check"
-    }
+    }   
 }

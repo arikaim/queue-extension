@@ -1,4 +1,7 @@
 {
     "title": "Jobs",
-    "message": "No installed jobs queue worker."
+    "message": "No installed jobs queue worker.",
+    "labels": {
+        "driver": "Queue Driver"
+    }
 }

@@ -10,6 +10,7 @@
     },
     "buttons": {      
         "run": "Run",
+        "test": "Check",
         "stop": "Stop"
-    }
+    }   
 }

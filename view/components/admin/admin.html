@@ -1,12 +1,11 @@
-{% set items = [ 
-    { id: 'cron_button', title: labels.cron, component: 'queue::admin.queue', icon: 'calendar outline', params: { worker: 'cron' }, active: true },     
-    { id: 'queue_button', title: labels.queue, component: 'queue::admin.queue', icon: 'tasks' },     
+{% set items = [         
+    { id: 'queue_button', title: labels.queue, component: 'queue::admin.queue', icon: 'tasks', active: true },     
     { id: 'settings_button', title: labels.settings, component: 'queue::admin.settings', icon: 'cog' }  
 ] %}
 
 {{  component('components:tabs',{ 
         items: items,
         menu: { extension: 'queue' },
-        content: { component: 'queue::admin.queue', params: { worker: 'cron' } } 
+        content: { component: 'queue::admin.queue' } 
     })
 }}

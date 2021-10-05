@@ -1,42 +1,9 @@
-{% set worker_name = worker_name|default('cron') %}
-{% if worker_name != 'cron' %}
-    {% set worker_name = getOption('queue.worker.name') %}
-    {% set worker = service('driver').create(worker_name) %}    
-{% else %}
-    {% set worker = service('queue').createWorkerManager() %}  
-{% endif %}
-
-{% set details = worker.getDetails() %}
-<div class="ui divided grid">
-    <div class="four wide column" id="worker_status_content">
-        {{ component('queue::admin.worker.status',{ worker_name: worker_name }) }}
-    </div>
-    <div class="twelve wide column">
-        <h4>
-            <i class="icon blue info"></i>
-            {{ labels.details }}
-        </h4>
-        <table class="ui very basic definition table">
-            <tbody>
-                {% for key, value in details %}
-                <tr>
-                    <td class="one wide right aligned">{{ key }}</td>
-                    <td>{{ value }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>      
-        {% if worker_name == 'cron' %}
-        <div class="mt-8">
-            {% if demo_mode != true %}
-            <button class="ui mini basic icon labeled button" id="run_cron_command">
-                <i class="icon play"></i>
-                {{ buttons.test }}
-            </button>
-            {% endif %}
-        </div>      
-        <div class="mt-4" id="worker_test_result">
-        </div>
-        {% endif %}
+{% set worker_name = worker_name|default(getOption('queue.worker.name')) %}
+{% set worker = service('driver').create(worker_name) %}    
+<div class="ui grid">   
+    <div class="column">
+        <div class="flex flex-row items-start w-full" id="worker_status_content">
+            {{ component('queue::admin.worker.status',{ worker_name: worker_name }) }}                          
+        </div>    
     </div>
 </div> 

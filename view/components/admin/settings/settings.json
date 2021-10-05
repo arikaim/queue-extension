@@ -4,6 +4,7 @@
         "icon": "cogs"
     },
     "labels": {
-        "driver": "Queue Workers"
+        "drivers": "Drivers",
+        "driver": "Default Queue Worker"
     }
 }

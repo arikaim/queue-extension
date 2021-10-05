@@ -5,8 +5,7 @@
             "content": "Confirm remove job '<b><% title %></b>'."
         }        
     },
-    "labels": {       
-        "cron": "Cron",  
+    "labels": {             
         "queue": "Queue Worker",     
         "settings": "Settings"       
     }  

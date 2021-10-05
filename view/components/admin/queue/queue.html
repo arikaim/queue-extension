@@ -1,9 +1,20 @@
-{% set worker = worker|default(getOption('queue.worker.name')) %}
-{% if worker is empty and worker != 'cron' %}
+{% set worker_name = worker|default(getOption('queue.worker.name')) %}
+{% if worker_name is empty %}
     {{ component('components:message.warning',{ message: message }) }}        
 {% else %}
-    <div class="ui segment">       
-        {{ component('queue::admin.worker',{ worker_name: worker }) }}      
+    <div class="ui segment">
+        <span class="font-bold px-1">
+            {{ labels.driver }}
+        </span>
+        {{  component('system:admin.drivers.dropdown',{ 
+            selected: worker_name,
+            category: 'queue.worker', 
+            calss: 'fluid w-full' 
+        }) 
+    }}  
     </div>
-    {{ component('queue::admin.jobs.view',{ worker_name: worker }) }} 
+    <div class="ui segment">       
+        {{ component('queue::admin.worker',{ worker_name: worker_name }) }}      
+    </div>
+    {{ component('queue::admin.jobs.view',{ worker_name: worker_name }) }} 
 {% endif %}

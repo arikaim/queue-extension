@@ -38,12 +38,13 @@ class QueueControlPanel extends ControlPanelApiController
     public function getStatusController($request, $response, $data) 
     {         
         $this->onDataValid(function($data) {
-            $name = $data->getSring('name','cron');
-            $manager = $this->get('queue')->createWorkerManager($name);
+            $defaultWorker = $this->get('options')->get('queue.worker.name','');
+            $name = $data->getSring('name',$defaultWorker);
+            $driver = $this->get('driver')->create($name);
+          
+            $running = (\is_object($driver) == true) ? $driver->isRunning() : false;
 
-            $running = $manager->isRunning();
-
-            $this->setResponse(\is_object($manager),function() use($running,$name) {                                
+            $this->setResponse(\is_object($driver),function() use($running,$name) {                                
                 $this
                     ->message('worker.status')
                     ->field('name',$name)
@@ -64,18 +65,17 @@ class QueueControlPanel extends ControlPanelApiController
     public function startController($request, $response, $data) 
     {         
         $this->onDataValid(function($data) {
-            $name = $data->getString('name','cron');
-            if (empty($name) == true || $name == 'cron') {
-                $manager = $this->get('queue')->createWorkerManager($name);
-            } else {
-                $manager = $this->get('driver')->create($name);
-            }
-            if (\is_object($manager) == false) {
-                $this->error('Not valid queue manager name');
+            $defaultWorker = $this->get('options')->get('queue.worker.name','');
+            $name = $data->getString('name',$defaultWorker);
+          
+            $driver = $this->get('driver')->create($name);
+           
+            if (\is_object($driver) == false) {
+                $this->error('Not valid queue driver name');
                 return false;
             }
 
-            $result = $manager->run();
+            $result = $driver->run();
            
             $this->setResponse($result,function() use($name) {                                
                 $this
@@ -97,18 +97,17 @@ class QueueControlPanel extends ControlPanelApiController
     public function stopController($request, $response, $data) 
     {         
         $this->onDataValid(function($data) {
-            $name = $data->getString('name','cron');
-            if (empty($name) == true || $name == 'cron') {
-                $manager = $this->get('queue')->createWorkerManager($name);
-            } else {
-                $manager = $this->get('driver')->create($name);
-            }
-            if (\is_object($manager) == false) {
-                $this->error('Not valid queue manager name');
+            $defaultWorker = $this->get('options')->get('queue.worker.name','');
+            $name = $data->getString('name',$defaultWorker);
+          
+            $driver = $this->get('driver')->create($name);
+          
+            if (\is_object($driver) == false) {
+                $this->error('Not valid queue driver name.');
                 return false;
             }
         
-            $result = $manager->stop();
+            $result = $driver->stop();
             
             $this->setResponse($result,function() use($name) {                                
                 $this

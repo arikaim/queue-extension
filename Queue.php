@@ -34,14 +34,14 @@ class Queue extends Extension
         $this->addApiRoute('PUT','/api/admin/queue/job/config','JobsControlPanel','saveConfig','session'); 
         $this->addApiRoute('PUT','/api/admin/queue/job/config/interval','JobsControlPanel','updateInterval','session'); 
         $this->addApiRoute('PUT','/api/admin/queue/job/run','JobsControlPanel','run','session'); 
-
         // Console
         $this->registerConsoleCommand('StopWorkerCommand');        
         $this->registerConsoleCommand('StartWorkerCommand');     
-
         // Options
         $this->createOption('queue.worker.pid',null); 
-        $this->createOption('queue.worker.name',null); 
+        $this->createOption('queue.worker.name','cron-queue'); 
+        // Drivers
+        $this->installDriver('Arikaim\\Extensions\\Queue\\Drivers\\CronQueueWorker');
     }
     
     /**

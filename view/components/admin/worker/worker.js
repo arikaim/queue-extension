@@ -44,6 +44,12 @@ function WorkerManager() {
     };
 
     this.init = function() {     
+        $('#drivers_dropdown').dropdown({
+            onChange: function(value) {          
+                self.loadWorkerStatus(value);                       
+            }
+        });
+        
         arikaim.ui.button('#start_worker',function(element) {
             var name = $(element).attr('worker-name');
 
