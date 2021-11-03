@@ -12,7 +12,6 @@ namespace  Arikaim\Extensions\Queue\Controllers;
 use Arikaim\Core\Controllers\ControlPanelApiController;
 use Arikaim\Core\Collection\PropertiesFactory;
 use Arikaim\Core\Interfaces\Job\JobInterface;
-use Arikaim\Core\Interfaces\Job\JobLogInterface;
 
 /**
  * Jobs control panel controller
@@ -176,11 +175,9 @@ class JobsControlPanel extends ControlPanelApiController
             $jobName = $data->get('name');           
 
             $job = $this->get('queue')->execute($jobName);
-            if ($job instanceof JobLogInterface) {
-                $this->get('logger')->info($job->getLogMessage(),$job->getLogContext());
-            }
+            $result = (\is_object($job) == false) ? false : $job->hasSuccess();
 
-            $this->setResponse(\is_object($job),function() use($job) {                  
+            $this->setResponse($result,function() use($job) {                  
                 $this
                     ->message('jobs.run')                  
                     ->field('uuid',$job->getId());   
