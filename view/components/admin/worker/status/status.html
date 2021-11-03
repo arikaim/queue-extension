@@ -21,12 +21,12 @@
         </div>
     {% else  %}
         {% if worker.isRunning() == true %}
-            <button class="ui basic button fluid" id="stop_worker" worker-name="{{ worker_name }}">
+            <button class="ui basic button" id="stop_worker" worker-name="{{ worker_name }}">
                 <i class="icon orange stop"></i>
                 {{ buttons.stop }}
             </button>
         {% else %}
-            <button class="ui basic button fluid" id="start_worker" worker-name="{{ worker_name }}">
+            <button class="ui basic button" id="start_worker" worker-name="{{ worker_name }}">
                 <i class="play icon olive"></i>
                 {{ buttons.run }}
             </button>
