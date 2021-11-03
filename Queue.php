@@ -31,12 +31,14 @@ class Queue extends Extension
         // jobs
         $this->addApiRoute('PUT','/api/admin/queue/job/status','JobsControlPanel','setStatus','session'); 
         $this->addApiRoute('DELETE','/api/admin/queue/job/delete/{uuid}','JobsControlPanel','deleteJob','session'); 
+        $this->addApiRoute('DELETE','/api/admin/queue/job/completed/delete','JobsControlPanel','deleteCompleted','session'); 
         $this->addApiRoute('PUT','/api/admin/queue/job/config','JobsControlPanel','saveConfig','session'); 
         $this->addApiRoute('PUT','/api/admin/queue/job/config/interval','JobsControlPanel','updateInterval','session'); 
         $this->addApiRoute('PUT','/api/admin/queue/job/run','JobsControlPanel','run','session'); 
         // Console
         $this->registerConsoleCommand('StopWorkerCommand');        
         $this->registerConsoleCommand('StartWorkerCommand');     
+        $this->registerConsoleCommand('PushJobCommand');     
         // Options
         $this->createOption('queue.worker.pid',null); 
         $this->createOption('queue.worker.name','cron-queue'); 

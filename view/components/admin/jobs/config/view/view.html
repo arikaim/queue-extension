@@ -2,6 +2,7 @@
     {% set job = createModel('Jobs').findById(uuid) %}
     {% set config = createProperties(job.config) %}
 {% endif %}
+
 {% if config is iterable %}
     <h4>{{ title }}</h4>
     <div class="p-1 m-1">

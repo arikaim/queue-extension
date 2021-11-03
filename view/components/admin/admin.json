@@ -3,7 +3,11 @@
         "remove": {
             "title": "Confirm Remove",
             "content": "Confirm remove job '<b><% title %></b>'."
-        }        
+        },
+        "completed": {
+            "title": "Confirm Remove",
+            "content": "Confirm remove all completed jobs."
+        }          
     },
     "labels": {             
         "queue": "Queue Worker",     

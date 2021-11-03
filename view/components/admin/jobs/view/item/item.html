@@ -11,6 +11,14 @@
                     <i class="icon green edit"></i>
                 </button>
                 <i class="redo alternate icon blue" title="{{ labels.recurring }}"></i>
+            {% else %}           
+                <button 
+                    class="ui mini basic compact icon button delete-job" 
+                    data-title="{{ job.name }}" 
+                    uuid="{{ job.uuid }}" 
+                    title="{{ labels.delete }}">
+                    <i class="icon orange trash"></i>
+                </button>       
             {% endif %}
             {% if job.isScheduled() == true %}
                 <i class="calendar alternate outline icon" title="{{ labels.scheduled }}"></i>
@@ -18,7 +26,7 @@
             <a class="link job-details" uuid="{{ job.uuid }}">
                 {{ job.name }}  
             </a>             
-        </div>          
+        </div>                  
         <span class="text-gray-600 pl-16">
             <i class="icon outline calendar"></i>
             {{ job.date_created|dateTimeFormat }}

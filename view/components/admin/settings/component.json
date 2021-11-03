@@ -1,7 +1,8 @@
 {
     "include": {
         "js": [
-            "system:options"
+            "system:options",
+            "system:admin.drivers"
         ]
     },
     "access": {

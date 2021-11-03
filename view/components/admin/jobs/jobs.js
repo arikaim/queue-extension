@@ -26,6 +26,10 @@ function Jobs() {
         return arikaim.put('/api/admin/queue/job/status',data,onSuccess,onError);           
     };
 
+    this.deleteCompleted = function(onSuccess, onError) {
+        return arikaim.delete('/api/admin/queue/job/completed/delete',onSuccess,onError);           
+    };
+
     this.delete = function(uuid, onSuccess, onError) {
         return arikaim.delete('/api/admin/queue/job/delete/' + uuid,onSuccess,onError);           
     };

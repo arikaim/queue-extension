@@ -1,10 +1,14 @@
 <div class="ui segment">     
     <div class="ui stackable two column grid">      
         <div class="column">
-            <div class="font-bold p-2">{{ title }}</div>
+            <div class="font-bold pt-1">{{ title }}</div>
         </div>
         <div class="right aligned column">
-            {{ component('components:paginator.dropdown',{ namespace: 'jobs' }) }}
+            <button class="ui icon labeled basic mini button delete-completed">
+                <i class="icon orange trash"></i>
+                {{ labels.completed }}
+            </button>
+            {{ component('components:paginator.dropdown',{ class:'mini', namespace: 'jobs' }) }}
         </div>
     </div>
     <div class="ui divider"></div>   

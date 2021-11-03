@@ -11,6 +11,8 @@ namespace  Arikaim\Extensions\Queue\Controllers;
 
 use Arikaim\Core\Controllers\ControlPanelApiController;
 use Arikaim\Core\Collection\PropertiesFactory;
+use Arikaim\Core\Interfaces\Job\JobInterface;
+use Arikaim\Core\Interfaces\Job\JobLogInterface;
 
 /**
  * Jobs control panel controller
@@ -28,6 +30,27 @@ class JobsControlPanel extends ControlPanelApiController
     }
 
     /**
+     * Delete completed jobs
+     *
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param Validator $data
+     * @return Psr\Http\Message\ResponseInterface
+     */
+    public function deleteCompletedController($request, $response, $data)
+    {
+        $this->onDataValid(function($data) {                 
+            $result = $this->get('queue')->deleteJobs(['status' => JobInterface::STATUS_COMPLETED]);
+           
+            $this->setResponse($result,function() {                  
+                $this
+                    ->message('jobs.completed');   
+            },'errors.jobs.completed');
+        });
+        $data->validate();      
+    }
+
+    /**
      * Delete job
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
@@ -40,9 +63,8 @@ class JobsControlPanel extends ControlPanelApiController
         $this->onDataValid(function($data) {       
             $uuid = $data->get('uuid');
 
-            $job = $this->get('queue')->findById($uuid);
-            $result = (\is_object($job) == true) ? $job->delete() : false;
-
+            $result = $this->get('queue')->deleteJob($uuid);
+           
             $this->setResponse($result,function() use($uuid) {                  
                 $this
                     ->message('jobs.delete')                   
@@ -154,7 +176,10 @@ class JobsControlPanel extends ControlPanelApiController
             $jobName = $data->get('name');           
 
             $job = $this->get('queue')->execute($jobName);
-                     
+            if ($job instanceof JobLogInterface) {
+                $this->get('logger')->info($job->getLogMessage(),$job->getLogContext());
+            }
+
             $this->setResponse(\is_object($job),function() use($job) {                  
                 $this
                     ->message('jobs.run')                  

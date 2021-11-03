@@ -1,6 +1,7 @@
 {
     "title": "Job Details",
     "labels": {
+        "single": "Single execution",
         "id": "Id",
         "suspend": "Suspend",
         "enable": "Enable",

@@ -13,17 +13,25 @@ function JobsView() {
         this.loadMessages('queue::admin');
         paginator.init('jobs_rows',"queue::admin.jobs.view.items",'jobs'); 
         
-        arikaim.ui.button('.delete-jobs',function(element) {
-            var title = $(element).attr('data-title');
-            var message = arikaim.ui.template.render(self.getMessage('remove.content'),{ title: title });
-
+        arikaim.ui.button('.delete-completed',function(element) {
             modal.confirmDelete({ 
-                title: self.getMessage('remove.title'),
-                description: message
+                title: self.getMessage('completed.title'),
+                description: self.getMessage('completed.content')
             },function() {
-                paginator.reload();
+                jobs.deleteCompleted(function(result) {
+                    self.loaItems();
+                });
             });
         });
+    };
+
+    this.loaItems = function() {
+        return arikaim.page.loadContent({
+            id: 'jobs_rows',           
+            component: 'queue::admin.jobs.view.items'                  
+        },function(result) {
+            self.initRows();
+        });         
     };
 
     this.loadJobItem = function(uuid) {
@@ -55,15 +63,6 @@ function JobsView() {
             });
         });
 
-        arikaim.ui.button('.delete-job',function(element) {
-            var uuid = $(element).attr('uuid');
-
-            jobs.delete(uuid,function(result) {
-                self.loadJobItem(result.uuid);
-                $('#job_details').html('');
-            });
-        });
-
         arikaim.ui.button('.run-job',function(element) {
             var uuid = $(element).attr('uuid');
 
@@ -83,10 +82,24 @@ function JobsView() {
             }); 
         });
 
-        
-        arikaim.ui.button('.job-details',function(element) {
+        arikaim.ui.button('.delete-job',function(element) {
             var uuid = $(element).attr('uuid');
-            
+            var title = $(element).attr('data-title');
+            var message = arikaim.ui.template.render(self.getMessage('remove.content'),{ title: title });
+
+            modal.confirmDelete({ 
+                title: self.getMessage('remove.title'),
+                description: message
+            },function() {
+                jobs.delete(uuid,function(result) {
+                    arikaim.ui.table.removeRow('#row_' + uuid);     
+                    arikaim.page.toastMessage(result.message);
+                });               
+            });           
+        });
+
+        arikaim.ui.button('.job-details',function(element) {
+            var uuid = $(element).attr('uuid');            
             self.loadDetails(uuid);
         });
     };

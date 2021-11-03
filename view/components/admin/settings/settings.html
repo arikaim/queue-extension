@@ -6,7 +6,7 @@
         <div class="ui horizontal divider header">
             {{ labels.drivers }}
         </div>
-        <div>
+        <div id="driver_config">
             {{  component('system:admin.drivers.list',{ 
                     category: 'queue.worker', 
                     current : queue_worker, 
