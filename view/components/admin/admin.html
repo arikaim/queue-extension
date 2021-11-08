@@ -3,7 +3,7 @@
     { id: 'settings_button', title: labels.settings, component: 'queue::admin.settings', icon: 'cog' }  
 ] %}
 
-{{  component('components:tabs',{ 
+{{  component('semantic~tabs',{ 
         items: items,
         menu: { extension: 'queue' },
         content: { component: 'queue::admin.queue' } 

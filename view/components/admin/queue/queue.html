@@ -1,6 +1,6 @@
 {% set worker_name = worker|default(getOption('queue.worker.name')) %}
 {% if worker_name is empty %}
-    {{ component('components:message.warning',{ message: message }) }}        
+    {{ component('semantic~message.warning',{ message: message }) }}        
 {% else %}
     <div class="ui segment">
         <span class="font-bold px-1">

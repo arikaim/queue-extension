@@ -8,7 +8,7 @@
                 <i class="icon orange trash"></i>
                 {{ labels.completed }}
             </button>
-            {{ component('components:paginator.dropdown',{ class:'mini', namespace: 'jobs' }) }}
+            {{ component('semantic~paginator.dropdown',{ class:'mini', namespace: 'jobs' }) }}
         </div>
     </div>
     <div class="ui divider"></div>   
@@ -18,7 +18,7 @@
                 {{ component('queue::admin.jobs.view.items') }}
             </div>
             <div id="paginator">
-                {{ component('components:paginator',{ namespace: 'jobs' }) }}
+                {{ component('semantic~paginator',{ namespace: 'jobs' }) }}
             </div>
         </div>
         <div class="column" id="job_details">
