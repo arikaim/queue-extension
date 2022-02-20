@@ -1,10 +1,8 @@
-{% set items = [         
-    { id: 'queue_button', title: labels.queue, component: 'queue::admin.queue', icon: 'tasks', active: true },     
-    { id: 'settings_button', title: labels.settings, component: 'queue::admin.settings', icon: 'cog' }  
-] %}
-
 {{  component('semantic~tabs',{ 
-        items: items,
+        items: [         
+            { id: 'queue_button', title: labels.queue, component: 'queue::admin.queue', icon: 'tasks', active: true },     
+            { id: 'settings_button', title: labels.settings, component: 'queue::admin.settings', icon: 'cog' }  
+        ],
         menu: { extension: 'queue' },
         content: { component: 'queue::admin.queue' } 
     })

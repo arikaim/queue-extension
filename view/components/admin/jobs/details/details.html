@@ -73,14 +73,14 @@
                                     {{ job.due_date|dateTimeFormat }}
                                 </div>
                             </div>
-                            <div class="ui basic label">
-                                <span>{{ labels.current }}</span>          
-                                <div class="detail">
-                                    <i class="icon outline calendar blue"></i>
-                                    {{ today()|dateTimeFormat }}
-                                </div>
-                            </div>   
                         {% endif %} 
+                    </td>
+                </tr>
+                <tr>
+                    <td class="right aligned">{{ labels.current }}</td>
+                    <td>
+                        <i class="icon outline calendar blue"></i>
+                        {{ today()|dateTimeFormat }}
                     </td>
                 </tr>
                 <tr>
