@@ -39,6 +39,7 @@ class Queue extends Extension
         $this->registerConsoleCommand('StopWorkerCommand');        
         $this->registerConsoleCommand('StartWorkerCommand');     
         $this->registerConsoleCommand('PushJobCommand');     
+        $this->registerConsoleCommand('WorkerInfoCommand');     
         // Options
         $this->createOption('queue.worker.pid',null); 
         $this->createOption('queue.worker.name','cron-queue'); 
