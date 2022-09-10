@@ -37,21 +37,20 @@ class QueueControlPanel extends ControlPanelApiController
     */
     public function getStatusController($request, $response, $data) 
     {         
-        $this->onDataValid(function($data) {
-            $defaultWorker = $this->get('options')->get('queue.worker.name','');
-            $name = $data->getSring('name',$defaultWorker);
-            $driver = $this->get('driver')->create($name);
-          
-            $running = (\is_object($driver) == true) ? $driver->isRunning() : false;
+        $data->validate(true);    
 
-            $this->setResponse(\is_object($driver),function() use($running,$name) {                                
-                $this
-                    ->message('worker.status')
-                    ->field('name',$name)
-                    ->field('running',$running);                                                                                        
-            },'errors.worker.status');
-        });
-        $data->validate();        
+        $defaultWorker = $this->get('options')->get('queue.worker.name','');
+        $name = $data->getSring('name',$defaultWorker);
+        $driver = $this->get('driver')->create($name);
+        
+        $running = (\is_object($driver) == true) ? $driver->isRunning() : false;
+
+        $this->setResponse(\is_object($driver),function() use($running,$name) {                                
+            $this
+                ->message('worker.status')
+                ->field('name',$name)
+                ->field('running',$running);                                                                                        
+        },'errors.worker.status');
     }
 
     /**
@@ -64,26 +63,25 @@ class QueueControlPanel extends ControlPanelApiController
     */
     public function startController($request, $response, $data) 
     {         
-        $this->onDataValid(function($data) {
-            $defaultWorker = $this->get('options')->get('queue.worker.name','');
-            $name = $data->getString('name',$defaultWorker);
-          
-            $driver = $this->get('driver')->create($name);
-           
-            if (\is_object($driver) == false) {
-                $this->error('Not valid queue driver name');
-                return false;
-            }
+        $data->validate(true);    
 
-            $result = $driver->run();
-           
-            $this->setResponse($result,function() use($name) {                                
-                $this
-                    ->message('worker.start')
-                    ->field('name',$name);                                                                                        
-            },'errors.worker.start');
-        });
-        $data->validate();        
+        $defaultWorker = $this->get('options')->get('queue.worker.name','');
+        $name = $data->getString('name',$defaultWorker);
+        
+        $driver = $this->get('driver')->create($name);
+        
+        if (\is_object($driver) == false) {
+            $this->error('Not valid queue driver name');
+            return false;
+        }
+
+        $result = $driver->run();
+        
+        $this->setResponse($result,function() use($name) {                                
+            $this
+                ->message('worker.start')
+                ->field('name',$name);                                                                                        
+        },'errors.worker.start');
     }
 
     /**
@@ -96,26 +94,25 @@ class QueueControlPanel extends ControlPanelApiController
     */
     public function stopController($request, $response, $data) 
     {         
-        $this->onDataValid(function($data) {
-            $defaultWorker = $this->get('options')->get('queue.worker.name','');
-            $name = $data->getString('name',$defaultWorker);
-          
-            $driver = $this->get('driver')->create($name);
-          
-            if (\is_object($driver) == false) {
-                $this->error('Not valid queue driver name.');
-                return false;
-            }
+        $data->validate(true);        
+
+        $defaultWorker = $this->get('options')->get('queue.worker.name','');
+        $name = $data->getString('name',$defaultWorker);
         
-            $result = $driver->stop();
-            
-            $this->setResponse($result,function() use($name) {                                
-                $this
-                    ->message('worker.stop')
-                    ->field('name',$name);        ;                                                                                        
-            },'errors.worker.stop');
-        });
-        $data->validate();        
+        $driver = $this->get('driver')->create($name);
+        
+        if (\is_object($driver) == false) {
+            $this->error('Not valid queue driver name.');
+            return false;
+        }
+    
+        $result = $driver->stop();
+        
+        $this->setResponse($result,function() use($name) {                                
+            $this
+                ->message('worker.stop')
+                ->field('name',$name);        ;                                                                                        
+        },'errors.worker.stop');
     }
 
     /**
