@@ -2,15 +2,20 @@
 {% if job is empty %}
     {% set job = service('queue').getJob(uuid) %}
 {% endif %}
-{% set config = createProperties(job.config) %}
-
 <div class="ui segment">
     <h4>{{ title }}</h4>
-    <form class="ui form {{ disabled }}" id="job_settings_form">   
-        <input type="hidden" name="name" value="{{ job.name }}" id="job_id">                                                            
-        {{ component('semantic~properties.fields',{ properties: config }) }}   
-        {% if demo_mode != true %}
-            {{ component('semantic~form.footer') }}    
-        {% endif %}      
-    </form>  
+    {% if job is not empty %}
+        {% set config = createProperties(job.config) %}
+        <form class="ui form {{ disabled }}" id="job_settings_form">   
+            <input type="hidden" name="name" value="{{ job.name }}" id="job_id">                                                            
+            {{ component('semantic~properties.fields',{ properties: config }) }}   
+            {% if demo_mode != true %}
+                {{ component('semantic~form.footer') }}    
+            {% endif %}      
+        </form>  
+    {% else %}
+        <div class="ui warning message">
+            {{ error }}
+        </div>
+    {% endif %}
 </div>

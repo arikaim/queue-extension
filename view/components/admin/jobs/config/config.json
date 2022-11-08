@@ -1,3 +1,4 @@
 {
-    "title": "Edit Job Config"
+    "title": "Edit Job Config",
+    "error": "Job not found"
 }
