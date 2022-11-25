@@ -76,7 +76,7 @@ class QueueControlPanel extends ControlPanelApiController
         }
 
         $result = $driver->run();
-        
+      
         $this->setResponse($result,function() use($name) {                                
             $this
                 ->message('worker.start')
@@ -107,6 +107,9 @@ class QueueControlPanel extends ControlPanelApiController
         }
     
         $result = $driver->stop();
+        var_dump($result);
+        exit();
+        
         
         $this->setResponse($result,function() use($name) {                                
             $this

@@ -20,6 +20,12 @@
                     <i class="icon orange trash"></i>
                 </button>       
             {% endif %}
+            <button 
+                class="ui mini basic compact icon button delete-job" 
+                data-title="{{ job.name }}"
+                uuid="{{ job.uuid }}">
+                <i class="icon red trash"></i>
+            </button>
             {% if job.isScheduled() == true %}
                 <i class="calendar alternate outline icon" title="{{ labels.scheduled }}"></i>
             {% endif %}

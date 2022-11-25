@@ -45,9 +45,15 @@
                 <td class="one wide right aligned">{{ key }}</td>
                 <td>
                     {% if value is iterable %}
-                        {% for item in value %}
-                        {{ item }}
-                        {% endfor %}
+                        <ol>
+                            {% for key, item in value %}
+                                <li>
+                                    <div class="ui basic label">
+                                        {{ item }}
+                                    </div>                                   
+                                </li>
+                            {% endfor %}
+                        </ol>                       
                     {% else %}
                         {{ value }}
                     {% endif %}

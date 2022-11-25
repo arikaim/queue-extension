@@ -70,6 +70,7 @@ function JobsView() {
                 self.loadDetails(result.uuid);                
             });
         });
+
     };
 
     this.initRows = function() {
