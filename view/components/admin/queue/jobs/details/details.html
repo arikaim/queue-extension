@@ -1,5 +1,4 @@
-{% set job = createModel('Jobs').findById(uuid) %}
-{% set config = createProperties(job.config) %}
+{% set job = service('queue').getJob(uuid) %}
 <div>
     <h4>{{ title }}</h4>
     {% if job.status == constant('Arikaim\\Core\\Interfaces\\Job\\JobInterface::STATUS_SUSPENDED') %}
@@ -12,15 +11,7 @@
             <i class="icon orange stop"></i>
             {{ labels.suspend }}
         </button>
-    {% endif %}
-    {% if job.status != constant('Arikaim\\Core\\Interfaces\\Job\\JobInterface::STATUS_COMPLETED') %}
-        {% if demo_mode != true %}
-            <button class="ui basic icon labeled mini button run-job" uuid="{{ job.uuid }}">
-                <i class="icon play green"></i>
-                {{ labels.run }}
-            </button>
-        {% endif %}
-    {% endif %}
+    {% endif %}   
     <div class="mt-2">
         <table class="ui very basic definition table">
             <thead>
@@ -43,7 +34,7 @@
                 <tr>
                     <td class="right aligned">{{ labels.status }}</td>
                     <td>
-                        {{  component('queue::admin.jobs.status.label',{ 
+                        {{  component('queue::admin.queue.jobs.status.label',{ 
                                 status: job.status, 
                                 class: 'mini basic right floated' 
                             }) 
@@ -132,9 +123,7 @@
             </tbody>  
         </table>     
     </div>
-    <div class="mt-2" id="job_config_content">
-        {% if config is iterable %}
-            {{ component('queue::admin.jobs.config.view',{ config: config, uuid: job.uuid }) }}                
-        {% endif %}
+    <div class="mt-2" id="job_config_content">       
+        {{ component('semantic~options',{ options: job.config }) }}                      
     </div>
 </div>

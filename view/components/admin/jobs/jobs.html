@@ -1,0 +1,19 @@
+<div class="ui segment">     
+    <div class="ui stackable two column grid">      
+        <div class="column">
+            <div class="font-bold pt-1">{{ title }}</div>
+        </div>
+        <div class="right aligned column">          
+            {{ component('semantic~paginator.dropdown',{ class:'mini', namespace: 'jobs.registry' }) }}
+        </div>
+    </div>
+</div>
+<div class="mt-4 p-4">
+    <div class="ui cards" id="jobs_registry_rows" component="queue::admin.jobs.items">        
+        {{ component('queue::admin.jobs.items') }}                   
+    </div>
+    <div id="paginator">
+        {{ component('semantic~paginator',{ namespace: 'jobs.registry' }) }}
+    </div>
+</div>
+   

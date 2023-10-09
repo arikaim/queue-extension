@@ -1,0 +1,13 @@
+{% set items = createModel('JobsRegistry').orderBy('id') %}
+{% set items = paginate(items,'jobs.registry') %}
+
+{% set items = items.getItems() %}
+{% if items|length == 0 %}
+    <div class="item">
+        {{ labels.empty }}
+    </div>
+{% endif %}
+
+{% for job in items %}
+    {{ component('queue::admin.jobs.item',{ item: job }) }}   
+{% endfor %}

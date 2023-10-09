@@ -1,6 +1,7 @@
 {{  component('semantic~tabs',{ 
         items: [         
-            { id: 'queue_button', title: labels.queue, component: 'queue::admin.queue', icon: 'tasks', active: true },     
+            { id: 'queue_button', title: labels.queue, component: 'queue::admin.queue', icon: 'tasks', active: true }, 
+            { id: 'jobs_button', title: labels.jobs, component: 'queue::admin.jobs', icon: 'code' },         
             { id: 'settings_button', title: labels.settings, component: 'queue::admin.settings', icon: 'cog' }  
         ],
         menu: { extension: 'queue' },

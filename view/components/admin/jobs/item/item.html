@@ -1,0 +1,38 @@
+{% if uuid is not empty %}
+    {% set item = createModel('JobsRegistry').findById(uuid) %}
+{% endif %}
+{% set job = service('queue').create(item.name) %}
+<div class="ui mini card" id="row_{{ item.uuid }}">
+    <div class="content">                            
+        <h4>
+            <i class="icon blue code"></i>         
+            {{ job.descriptor().getValue('title')|default(item.name) }}
+        </h4>                                                      
+    </div>     
+    <div class="content"> 
+        <p class="p-1">
+            {{ job.descriptor().getValue('description') }}       
+        </p>
+        <div class="flex flex-row items-center">
+            <div class="font-bold pr-2">{{ labels.name }}</div>
+            <div class="ui mini basic label">{{ item.name }}</div>
+        </div>
+        {% if item.package_name is not empty %}  
+            <h4>{{ labels.package }}</h4>      
+            <div class="ui basic horizontal label">
+                {{ item.package_name }}
+                <div class="detail">{{ item.package_type }}</div>           
+            </div>
+        {% endif %}
+    </div>
+    <div class="extra content">             
+        <button 
+            title="{{ labels.info }}"
+            class="ui mini basic compact icon button job-action" 
+            mountTo="job_registry_details"
+            component=""
+            params="uuid:{{ item.uuid }}">
+            <i class="icon blue info"></i>
+        </button>              
+    </div>
+</div>

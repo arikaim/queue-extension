@@ -7,7 +7,7 @@ arikaim.component.onLoaded(function() {
         return jobs.saveConfig('#job_settings_form',function(result) {     
             arikaim.page.loadContent({
                 id: 'job_config_content',           
-                component: 'queue::admin.jobs.config.view',
+                component: 'queue::admin.queue.jobs.config.view',
                 params: { uuid: result.uuid }  
             });      
         });

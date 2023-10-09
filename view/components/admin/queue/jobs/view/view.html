@@ -1,0 +1,27 @@
+<div class="ui segment">     
+    <div class="ui stackable two column grid">      
+        <div class="column">
+            <div class="font-bold pt-1">{{ title }}</div>
+        </div>
+        <div class="right aligned column">
+            <button class="ui icon labeled basic mini button delete-completed">
+                <i class="icon orange trash"></i>
+                {{ labels.completed }}
+            </button>
+            {{ component('semantic~paginator.dropdown',{ class:'mini', namespace: 'jobs' }) }}
+        </div>
+    </div>
+    <div class="ui divider"></div>   
+    <div class="ui two column divided grid">
+        <div class="column">
+            <div class="ui middle aligned divided relaxed list" id="jobs_rows" component="queue::admin.queue.jobs.view.items">
+                {{ component('queue::admin.queue.jobs.view.items') }}
+            </div>
+            <div id="paginator">
+                {{ component('semantic~paginator',{ namespace: 'jobs' }) }}
+            </div>
+        </div>
+        <div class="column" id="job_details">
+        </div>
+    </div>
+</div>
