@@ -2,6 +2,7 @@
     "labels": {
         "name": "Name",
         "package": "Package",
-        "info": "Job Details"        
+        "info": "Job Details",
+        "config": "Job Config"                
     }
 }

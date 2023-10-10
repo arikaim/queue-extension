@@ -1,0 +1,80 @@
+{% if uuid is not empty %}
+    {% set item = createModel('JobsRegistry').findById(uuid) %}
+{% endif %}
+{% set job = service('queue').create(item.name) %}
+{% component 'semantic~panel' %}   
+    <div class="mt-2">
+        <table class="ui very basic definition table">
+            <thead>
+                <tr>
+                    <th class="two wide"></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="right aligned">{{ labels.id }}</td>
+                    <td>{{ item.uuid }}</td>
+                </tr>
+                <tr>
+                    <td class="right aligned">{{ labels.name }}</td>
+                    <td>
+                        {{ item.name }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="right aligned">{{ labels.title }}</td>
+                    <td>
+                        {{ job.descriptor().getValue('title')|default(item.name) }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="right aligned">{{ labels.description }}</td>
+                    <td>
+                        {{ job.descriptor().getValue('description')|default(item.name) }}
+                    </td>
+                </tr>                 
+                <tr>
+                    <td class="right aligned">{{ labels.priority }}</td>
+                    <td>
+                        {{ job.getPriority() }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="right aligned">{{ labels.date }}</td>
+                    <td>
+                        {{ item.date_created|dateTimeFormat }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="right aligned">{{ labels.handler }}</td>
+                    <td>
+                        {{ item.handler_class }}
+                    </td>
+                </tr>
+                {% if item.package_name is not empty %}  
+                    <tr>
+                        <td class="right aligned">{{ labels.package }}</td>
+                        <td>
+                            <div class="ui basic horizontal label">
+                                {{ item.package_name }}
+                                <div class="detail">{{ item.package_type }}</div>           
+                            </div>                        
+                        </td>
+                    </tr>                                                
+                {% endif %}                
+            </tbody>  
+        </table>  
+        <h4>
+            {{ labels.properties }}
+        </h4>   
+        {{ component('semantic~properties.details',{ properties: job.descriptor().collection('parameters') }) }}         
+        <h4>
+            {{ labels.result }}
+        </h4>   
+        {{ component('semantic~properties.details',{ properties: job.descriptor().collection('result') }) }}    
+        <div>
+            {{ component('semantic~options',{ options: item.options }) }}                      
+        </div>   
+    </div>
+{% endcomponent %}

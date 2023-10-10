@@ -1,7 +1,7 @@
 {
     "include": {
         "js": [
-            "queue::admin.jobs"
+            "queue::admin.queue.jobs"
         ]
     },
     "access": {

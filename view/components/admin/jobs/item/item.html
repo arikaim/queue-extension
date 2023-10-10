@@ -30,9 +30,17 @@
             title="{{ labels.info }}"
             class="ui mini basic compact icon button job-action" 
             mountTo="job_registry_details"
-            component=""
+            component="queue::admin.jobs.details"
             params="uuid:{{ item.uuid }}">
             <i class="icon blue info"></i>
+        </button>   
+        <button 
+            title="{{ labels.config }}"
+            class="ui mini basic compact icon button job-action" 
+            mountTo="job_registry_details"
+            component="queue::admin.jobs.config"
+            params="uuid:{{ item.uuid }}">
+            <i class="icon blue cog"></i>
         </button>              
     </div>
 </div>

@@ -11,8 +11,9 @@ function JobsRegistryView() {
 
     this.init = function() {     
         this.loadMessages('queue::admin');
-        paginator.init('jobs_rows',"queue::admin.jobs.view.items",'jobs.registry'); 
+        paginator.init('jobs_registry_rows',"queue::admin.jobs.view.items",'jobs.registry'); 
 
+        
     };
 
     this.loaItems = function() {
@@ -47,7 +48,9 @@ function JobsRegistryView() {
     };
 
     this.initRows = function() {
-    
+        
+        arikaim.ui.loadComponentButton('.job-action');
+        
         arikaim.ui.button('.job-details',function(element) {
             var uuid = $(element).attr('uuid');            
             self.loadDetails(uuid);

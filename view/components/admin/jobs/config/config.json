@@ -1,0 +1,16 @@
+{
+    "title": "Job Config",
+    "icon": "cog",
+    "labels": {
+        "id": "Id",
+        "name": "Job Name",
+        "title": "Title",
+        "description": "Description",
+        "package": "Package",
+        "date": "Date",
+        "priority": "Priority",
+        "handler": "Handler",
+        "properties": "Properties",
+        "result": "Result"                
+    }
+}

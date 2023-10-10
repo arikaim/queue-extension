@@ -8,12 +8,15 @@
         </div>
     </div>
 </div>
-<div class="mt-4 p-4">
-    <div class="ui cards" id="jobs_registry_rows" component="queue::admin.jobs.items">        
-        {{ component('queue::admin.jobs.items') }}                   
+<div class="flex flex-row items-start mt-4 p-4">
+    <div class="flex-grow w-full">
+        <div class="ui cards" id="jobs_registry_rows" component="queue::admin.jobs.items">        
+            {{ component('queue::admin.jobs.items') }}                   
+        </div>
+        <div id="paginator">
+            {{ component('semantic~paginator',{ namespace: 'jobs.registry' }) }}
+        </div>
     </div>
-    <div id="paginator">
-        {{ component('semantic~paginator',{ namespace: 'jobs.registry' }) }}
+    <div class="w-1/3" id="job_registry_details">
     </div>
 </div>
-   

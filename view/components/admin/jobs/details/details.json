@@ -1,0 +1,16 @@
+{
+    "title": "Job Details",
+    "icon": "info",
+    "labels": {
+        "id": "Id",
+        "name": "Name",
+        "title": "Title",
+        "description": "Description",
+        "package": "Package",
+        "date": "Date",
+        "priority": "Priority",
+        "handler": "Handler",
+        "properties": "Properties",
+        "result": "Result"                
+    }
+}

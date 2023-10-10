@@ -1,5 +1,5 @@
 {% if uuid is not empty %}
-    {% set job = createModel('Jobs').findById(uuid) %}
+    {% set job = createModel('Queue').findById(uuid) %}
 {% endif %}
 <div class="item" id="row_{{ job.uuid }}">
     <div class="content">                      
