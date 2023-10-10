@@ -11,6 +11,7 @@
         "priority": "Priority",
         "handler": "Handler",
         "properties": "Properties",
+        "values": "Default Values",
         "result": "Result"                
     }
 }

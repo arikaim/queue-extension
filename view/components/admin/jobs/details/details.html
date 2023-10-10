@@ -68,13 +68,18 @@
         <h4>
             {{ labels.properties }}
         </h4>   
-        {{ component('semantic~properties.details',{ properties: job.descriptor().collection('parameters') }) }}         
+        {{ component('semantic~properties.details',{ properties: job.descriptor().collection('parameters') }) }}   
+        {% if item.options is iterable %}
+        <h4>
+            {{ labels.values }}
+        </h4> 
+        <div>
+            {{ component('semantic~options',{ options: item.options, hide_title: true }) }}                      
+        </div> 
+        {% endif %}      
         <h4>
             {{ labels.result }}
         </h4>   
         {{ component('semantic~properties.details',{ properties: job.descriptor().collection('result') }) }}    
-        <div>
-            {{ component('semantic~options',{ options: item.options }) }}                      
-        </div>   
     </div>
 {% endcomponent %}

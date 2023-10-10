@@ -12,5 +12,8 @@
         "handler": "Handler",
         "properties": "Properties",
         "result": "Result"                
+    },
+    "errors": {
+        "config": "Not allowed edit job config"
     }
 }

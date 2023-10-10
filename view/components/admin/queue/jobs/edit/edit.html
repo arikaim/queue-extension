@@ -1,4 +1,4 @@
-{% set job = createModel('Jobs').findById(uuid) %}
+{% set job = createModel('Queue').findById(uuid) %}
 <input type="hidden" value="{{ uuid }}" id="job_uuid">
 <div>
     <h4>{{ title }}</h4>

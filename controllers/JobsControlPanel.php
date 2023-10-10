@@ -108,24 +108,32 @@ class JobsControlPanel extends ControlPanelApiController
     */
     public function saveConfigController($request, $response, $data)
     {
-        $this->onDataValid(function($data) {            
-            $jobName = $data->get('name');           
-            $data->offsetUnset('name');
+        $data
+            ->validate(true); 
+                  
+        $jobId = $data->get('job');           
+        $data->offsetUnset('job');
 
-            $job = $this->get('queue')->getJob($jobName);
-            // change config valus
-            $config = PropertiesFactory::createFromArray($job['config']); 
-            $config->setPropertyValues($data->toArray());
+        $job = $this->get('queue')->jobsRegistry()->findJob($jobId);
+        if ($job == null) {
+            $this->error('Not valid job id');
+            return false;
+        }
 
-            $result = $this->get('queue')->saveJobConfig($jobName,$config->toArray());
-            
-            $this->setResponse($result,function() use($job) {                  
-                $this
-                    ->message('jobs.config')                  
-                    ->field('uuid',$job['uuid']);   
-            },'errors.jobs.config');          
-        });
-        $data->validate();       
+        $jobInstance = $this->get('queue')->create($job->name);
+        // check access
+        if ($jobInstance->descriptor()->getValue('allow.admin.config') == false) {
+            $this->error('Not allowed edit job config form admin panel.');
+            return false;
+        }
+
+        $result = $job->saveOptions($data->toArray());
+        
+        $this->setResponse($result,function() use($job) {                  
+            $this
+                ->message('jobs.config')                  
+                ->field('uuid',$job->uuid);   
+        },'errors.jobs.config');          
     }
 
     /**
@@ -171,18 +179,21 @@ class JobsControlPanel extends ControlPanelApiController
     */
     public function runController($request, $response, $data)
     {
-        $this->onDataValid(function($data) {            
-            $jobName = $data->get('name');           
+        $data
+            ->validate(true);  
+      
+        $jobId = $data->get('job');           
 
-            $job = $this->get('queue')->execute($jobName);
-            $result = (\is_object($job) == false) ? false : $job->hasSuccess();
-
-            $this->setResponse($result,function() use($job) {                  
-                $this
-                    ->message('jobs.run')                  
-                    ->field('uuid',$job->getId());   
-            },'errors.jobs.run');          
-        });
-        $data->validate();  
+        $job = $this->get('queue')->run($jobId);
+        if ($job == null) {
+            $this->error('Error job execution.');
+            return;
+        }
+       
+        $this->setResponse($job->hasSuccess(),function() use($job) {                  
+            $this
+                ->message('jobs.run')                  
+                ->field('uuid',$job->getId());   
+        },'errors.jobs.run');          
     }
 }

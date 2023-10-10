@@ -2,6 +2,15 @@
     {% set item = createModel('JobsRegistry').findById(uuid) %}
 {% endif %}
 {% set job = service('queue').create(item.name) %}
+{% set properties = job.descriptor().collection('parameters') %}
+{% set result = properties.setPropertyValues(item.options) %}
+
+{% if job.descriptor().getValue('allow.admin.config') != true %}
+    <div class="ui red message">
+        {% error "Not allowed edit job config" %}  
+    </div>       
+{% endif %}
+
 {% component 'semantic~panel' %}   
     <div class="mt-2">
         <h4>
@@ -12,7 +21,13 @@
         </div>
         <h4>
             {{ labels.properties }}
-        </h4>   
-        {{ component('semantic~properties.details',{ properties: job.descriptor().collection('parameters') }) }}         
+        </h4> 
+        <div class="mt-4">
+            <form class="ui form" id="job_settings_form">
+                <input type="hidden" name="job" value="{{ item.uuid }}" id="job_id">                  
+                {{ component('semantic~properties.items',{ items: properties }) }}    
+                {{ component('semantic~form.footer') }}   
+            </form>
+        </div>       
     </div>
 {% endcomponent %}
