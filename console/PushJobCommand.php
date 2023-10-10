@@ -10,7 +10,6 @@
 namespace Arikaim\Extensions\Queue\Console;
 
 use Arikaim\Core\Console\ConsoleCommand;
-use Arikaim\Core\Arikaim;
 
 /**
  * Push job to queue 
@@ -39,6 +38,8 @@ class PushJobCommand extends ConsoleCommand
      */
     protected function executeCommand($input,$output)
     {
+        global $container;
+
         $this->showTitle();
 
         $name = $input->getArgument('name');
@@ -49,12 +50,18 @@ class PushJobCommand extends ConsoleCommand
         $extension = $input->getArgument('extension');
 
         $this->writeFieldLn('Name',$name);
-        $this->writeFieldLn('Extension',$extension);
+        $this->writeFieldLn('Extension',$extension ?? '');
         
-        $result = Arikaim::queue()->push($name,$extension,[],true);
+        $job = $container->get('queue')->create($name,null,$extension);
+        if ($job->descriptor()->getValue('allow.console.push') == false) {
+            $this->showError('Not allowed push job from console.');
+            return;
+        }
+
+        $result = $container->get('queue')->push($name,null,$extension);
 
         if ($result === false) {
-            $this->showError('Error');
+            $this->showError('Error push to queue');
             return;
         }
       

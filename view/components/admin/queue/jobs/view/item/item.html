@@ -15,14 +15,6 @@
                     <button class="ui mini basic compact icon button edit-job" uuid="{{ job.uuid }}">
                         <i class="icon green edit"></i>
                     </button>              
-                {% else %}           
-                    <button 
-                        class="ui mini basic compact icon button delete-job" 
-                        data-title="{{ job.name }}" 
-                        uuid="{{ job.uuid }}" 
-                        title="{{ labels.delete }}">
-                        <i class="icon orange trash"></i>
-                    </button>       
                 {% endif %}
                 <button 
                     class="ui mini basic compact icon button delete-job" 

@@ -10,7 +10,6 @@
 namespace  Arikaim\Extensions\Queue\Controllers;
 
 use Arikaim\Core\Controllers\ControlPanelApiController;
-use Arikaim\Core\Collection\PropertiesFactory;
 use Arikaim\Core\Interfaces\Job\JobInterface;
 
 /**

@@ -40,7 +40,7 @@ class StopWorkerCommand extends ConsoleCommand
         $this->showTitle();
 
         $driver = Arikaim::get('driver')->create('reactphp-queue');
-        if (\is_object($driver) == false) {
+        if ($driver == null) {
             $this->showError('React php queue dievr not installed.');
             return;
         }

@@ -1,5 +1,6 @@
 {
     "jobs": {
+        "delete": "Job deleted successfully.",
         "config": "Job config saved successfully.", 
         "interval": "Recurring interval changed successfully.",
         "status": "Job status changed successfully."
