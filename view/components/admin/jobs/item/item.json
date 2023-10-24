@@ -3,6 +3,7 @@
         "name": "Name",
         "package": "Package",
         "info": "Job Details",
+        "push": "Push to queue",
         "config": "Job Config"                
     }
 }

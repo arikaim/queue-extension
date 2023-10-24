@@ -82,19 +82,19 @@ class JobsControlPanel extends ControlPanelApiController
      */
     public function setStatusController($request, $response, $data)
     {
-        $this->onDataValid(function($data) {   
-            $uuid = $data->get('uuid');  
-            $status = $data->get('status',1);
+        $data
+            ->validate(true);    
 
-            $result = $this->get('queue')->getStorageDriver()->setJobStatus($uuid,$status);
-            $this->setResponse($result,function() use($status,$uuid) {                  
-                $this
-                    ->message('jobs.status')
-                    ->field('status',$status)
-                    ->field('uuid',$uuid);   
-            },'errors.jobs.status');
-        });
-        $data->validate();          
+        $uuid = $data->get('uuid');  
+        $status = $data->get('status',1);
+
+        $result = $this->get('queue')->getStorageDriver()->setJobStatus($uuid,$status);
+        $this->setResponse($result,function() use($status,$uuid) {                  
+            $this
+                ->message('jobs.status')
+                ->field('status',$status)
+                ->field('uuid',$uuid);   
+        },'errors.jobs.status');
     }
 
     /**
@@ -176,7 +176,7 @@ class JobsControlPanel extends ControlPanelApiController
      * @param Validator $data
      * @return Psr\Http\Message\ResponseInterface
     */
-    public function runController($request, $response, $data)
+    public function run($request, $response, $data)
     {
         $data
             ->validate(true);  
@@ -194,5 +194,46 @@ class JobsControlPanel extends ControlPanelApiController
                 ->message('jobs.run')                  
                 ->field('uuid',$job->getId());   
         },'errors.jobs.run');          
+    }
+
+    /**
+     * Push job in queue
+     *
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param Validator $data
+     * @return Psr\Http\Message\ResponseInterface
+    */
+    public function push($request, $response, $data)
+    {
+        $data
+            ->validate(true);  
+      
+        $uuid = $data->get('uuid');           
+        $type = $data->get('type');             
+        $interval = null;
+        $scheduleTime = null;
+
+        if ($type == 'recurring') {
+            $interval = $data->get('interval',null);  
+        }
+
+        if ($type == 'scheduled') {
+            $scheduleTime = $data->get('schedule_time',null);    
+        }
+      
+        $job = $this->get('queue')->jobsRegistry()->findJob($uuid);
+        if ($job == null) {
+            $this->error('Error job not found.');
+            return;
+        }
+       
+        $result = $this->get('queue')->push($job->name,null,$job->package_name,$interval,$scheduleTime);
+
+        $this->setResponse($result,function() use($uuid) {                  
+            $this
+                ->message('jobs.push')                  
+                ->field('uuid',$uuid);   
+        },'errors.jobs.push');          
     }
 }

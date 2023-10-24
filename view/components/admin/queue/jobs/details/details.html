@@ -44,10 +44,10 @@
                 <tr>
                     <td class="right aligned">{{ labels.type }}</td>
                     <td>
-                        {% if job.isRecurring() == true %}
+                        {% if job.recuring_interval is not empty %}
                             <span>{{ labels.recurring }}</span>
                             {{ component('queue::admin.interval.label',{ interval: job.recuring_interval }) }}                                                                                                        
-                        {% elseif job.isScheduled() == true %}
+                        {% elseif job.schedule_time is not empty %}
                             <span>{{ labels.scheduled }}</span>
                             <div class="ui basic label">
                                 <i class="icon blue outline calendar"></i>

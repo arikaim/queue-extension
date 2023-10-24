@@ -47,12 +47,12 @@ function Jobs() {
         return arikaim.put('/api/admin/queue/job/config/interval',data,onSuccess,onError);      
     };
 
-    this.run = function(name, onSuccess, onError) {
-        var data = { 
-            name: name        
-        };
-        
-        return arikaim.put('/api/admin/queue/job/run',data,onSuccess,onError)
+    this.run = function(formId, onSuccess, onError) {
+        return arikaim.put('/api/admin/queue/job/run',formId,onSuccess,onError)
+    };
+
+    this.push = function(formId, onSuccess, onError) {
+        return arikaim.put('/api/admin/queue/job/push',formId,onSuccess,onError)
     };
 }
 

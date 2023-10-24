@@ -35,6 +35,7 @@ class Queue extends Extension
         $this->addApiRoute('PUT','/api/admin/queue/job/config','JobsControlPanel','saveConfig','session'); 
         $this->addApiRoute('PUT','/api/admin/queue/job/config/interval','JobsControlPanel','updateInterval','session'); 
         $this->addApiRoute('PUT','/api/admin/queue/job/run','JobsControlPanel','run','session'); 
+        $this->addApiRoute('PUT','/api/admin/queue/job/push','JobsControlPanel','push','session'); 
         // Console
         $this->registerConsoleCommand('StopWorkerCommand');        
         $this->registerConsoleCommand('StartWorkerCommand');     

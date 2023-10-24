@@ -1,0 +1,72 @@
+{% if uuid is not empty %}
+    {% set item = createModel('JobsRegistry').findById(uuid) %}
+{% endif %}
+{% set job = service('queue').create(item.name) %}
+
+{% component 'semantic~panel' %}  
+    <div class="mt-2">
+        <h4>
+            {{ labels.job }}
+        </h4>
+        <div class="ui basic label">
+            {{ item.name }}
+        </div>
+        <div class="mt-4">
+            <form class="ui form" id="push_job_form">  
+                <input type="hidden" name="uuid" id="uuid" value="{{ item.uuid }}"> 
+                <div class="field">
+                    <label>
+                        {{ labels.type }}
+                    </label>
+                    <div>
+                        <div class="field">
+                            <div class="ui radio checkbox checked">
+                                <input type="radio" name="type" value="single" checked class="hidden">
+                                <label>
+                                    {{ type.single }}
+                                </label>
+                            </div>    
+                        </div>
+                        <div class="field">
+                            <div class="ui radio checkbox ">
+                                <input type="radio" name="type" value="recurring" class="hidden">
+                                <label>
+                                    {{ type.recurring }}
+                                </label>
+                            </div>
+                            <div class="px-10">                 
+                                {{ component('queue::admin.interval',{ class: 'mini selection' }) }}
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui radio checkbox ">
+                                <input type="radio" name="type" value="scheduled" class="hidden">
+                                <label>
+                                    {{ type.scheduled }}
+                                </label>
+                            </div>
+                            <div class="pl-4 w-1/2">
+                                {{  component('semantic~form.fields.calendar',{
+                                        id: 'schedule_time_calendar',
+                                        field_name: 'schedule_time',
+                                        field_value: today()
+                                    }) 
+                                }}   
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+                <h4>
+                    {{ labels.properties }}
+                </h4>
+                <div>
+                    {{  component('semantic~form.footer',{
+                            button_title: buttons.push
+                        }) 
+                    }}   
+                </div>
+            </form>
+        </div>
+    </div>
+{% endcomponent %}
