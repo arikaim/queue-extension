@@ -2,19 +2,5 @@
 {% if worker_name is empty %}
     {{ component('semantic~message.warning',{ message: message }) }}        
 {% else %}
-    <div class="ui segment">
-        <span class="font-bold px-1">
-            {{ labels.driver }}
-        </span>
-        {{  component('system:admin.drivers.dropdown',{ 
-            selected: worker_name,
-            category: 'queue.worker', 
-            calss: 'fluid w-full' 
-        }) 
-    }}  
-    </div>
-    <div class="ui segment">       
-        {{ component('queue::admin.worker',{ worker_name: worker_name }) }}      
-    </div>
     {{ component('queue::admin.queue.jobs.view',{ worker_name: worker_name }) }} 
 {% endif %}

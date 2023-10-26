@@ -41,6 +41,14 @@
             component="queue::admin.jobs.push"
             params="uuid:{{ item.uuid }}">
             <i class="icon blue plus"></i>
+        </button>  
+        <button 
+            title="{{ labels.queue }}"
+            class="ui mini basic compact icon button job-action" 
+            mountTo="job_registry_details"
+            component="queue::admin.jobs.queue"
+            params="uuid:{{ item.uuid }}">
+            <i class="icon blue list"></i>
         </button>   
         {% if job.descriptor().getValue('allow.admin.config') == true %}
             <button 

@@ -1,0 +1,52 @@
+{% set worker_name = worker_name|default('cron-queue') %}
+{% set worker = service('driver').create(worker_name) %} 
+{% set details = worker.getDetails() %}
+
+<div class="p-2 w-1/2 flex-grow border-l border-0 border-solid border-gray-400">
+
+    {{ worker.getTitle() }}
+    <h4 class="pt-1">
+        <i class="icon blue info"></i>
+        {{ labels.details }}
+    </h4>
+    <p class="mt-4 p-2">
+        {{ worker.getDescription() }}
+    </p>
+
+    <table class="ui very basic definition mini table">
+        <tbody>
+            {% for key, value in details %}
+            <tr>
+                <td class="one wide right aligned">{{ key }}</td>
+                <td>
+                    {% if value is iterable %}
+                        <ol>
+                            {% for key, item in value %}
+                                <li>
+                                    <div class="ui basic label">
+                                        {{ item }}
+                                    </div>                                   
+                                </li>
+                            {% endfor %}
+                        </ol>                       
+                    {% else %}
+                        {{ value }}
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>      
+    {% if worker_name == 'cron-queue' %}
+        <div class="mt-8">
+            {% if demo_mode != true %}
+            <button class="ui mini basic icon labeled button" id="run_cron_command">
+                <i class="icon play"></i>
+                {{ buttons.test }}
+            </button>
+            {% endif %}
+        </div>      
+        <div class="mt-4" id="worker_test_result">
+        </div>
+    {% endif %}
+</div>    

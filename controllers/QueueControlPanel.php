@@ -69,14 +69,13 @@ class QueueControlPanel extends ControlPanelApiController
         $name = $data->getString('name',$defaultWorker);
         
         $driver = $this->get('driver')->create($name);
-        
-        if (\is_object($driver) == false) {
+        if ($driver == null) {
             $this->error('Not valid queue driver name');
             return false;
         }
 
         $result = $driver->run();
-      
+        
         $this->setResponse($result,function() use($name) {                                
             $this
                 ->message('worker.start')

@@ -1,9 +1,25 @@
-{% set worker_name = worker_name|default(getOption('queue.worker.name')) %}
-{% set worker = service('driver').create(worker_name) %}    
-<div class="ui grid">   
-    <div class="column">
-        <div class="flex flex-row items-start w-full" id="worker_status_content">
-            {{ component('queue::admin.worker.status',{ worker_name: worker_name }) }}                          
-        </div>    
+{% set worker_name = worker|default(getOption('queue.worker.name')) %}
+{% if worker_name is empty %}
+    {{ component('semantic~message.warning',{ message: message }) }}        
+{% else %}
+    <div class="ui segment">
+        <span class="font-bold px-1">
+            {{ labels.driver }}
+        </span>
+        {{  component('system:admin.drivers.dropdown',{ 
+                selected: worker_name,
+                category: 'queue.worker', 
+                calss: 'fluid w-full' 
+            }) 
+        }}  
     </div>
-</div> 
+    <div class="ui segment"> 
+        <div class="ui grid">   
+            <div class="column">
+                <div class="flex flex-row items-start w-full" id="worker_status_content">
+                    {{ component('queue::admin.worker.status',{ worker_name: worker_name }) }}                          
+                </div>    
+            </div>
+        </div> 
+    </div>
+{% endif %}

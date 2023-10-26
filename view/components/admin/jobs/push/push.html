@@ -2,6 +2,7 @@
     {% set item = createModel('JobsRegistry').findById(uuid) %}
 {% endif %}
 {% set job = service('queue').create(item.name) %}
+{% set properties = job.descriptor().collection('parameters') %}
 
 {% component 'semantic~panel' %}  
     <div class="mt-2">
@@ -55,11 +56,11 @@
                             </div>
                         </div>
                     </div>
-                   
                 </div>
                 <h4>
                     {{ labels.properties }}
                 </h4>
+                {{ component('semantic~properties.items',{ items: properties }) }}    
                 <div>
                     {{  component('semantic~form.footer',{
                             button_title: buttons.push

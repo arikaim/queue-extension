@@ -222,13 +222,23 @@ class JobsControlPanel extends ControlPanelApiController
             $scheduleTime = $data->get('schedule_time',null);    
         }
       
-        $job = $this->get('queue')->jobsRegistry()->findJob($uuid);
-        if ($job == null) {
+        $model = $this->get('queue')->jobsRegistry()->findJob($uuid);
+        if ($model == null) {
             $this->error('Error job not found.');
             return;
         }
        
-        $result = $this->get('queue')->push($job->name,null,$job->package_name,$interval,$scheduleTime);
+        $job = $this->get('queue')->create($model->name);
+        if ($job == null) {
+            $this->error('job not found.');
+            return;
+        }
+
+        // set props values
+        $job->descriptor()->collection('parameters')->setPropertyValues($data->toArray());
+        $params = $job->descriptor()->collection('parameters')->getValues();
+
+        $result = $this->get('queue')->push($model->name,$params,$model->package_name,$interval,$scheduleTime);
 
         $this->setResponse($result,function() use($uuid) {                  
             $this

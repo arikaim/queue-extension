@@ -10,7 +10,6 @@
 namespace Arikaim\Extensions\Queue\Console;
 
 use Arikaim\Core\Console\ConsoleCommand;
-use Arikaim\Core\Arikaim;
 
 /**
  * Start queue worker 
@@ -25,7 +24,8 @@ class StartWorkerCommand extends ConsoleCommand
     protected function configure()
     {
         $this->setName('worker:start');
-        $this->setDescription('Start queue worker');        
+        $this->setDescription('Start queue worker');   
+        $this->addOptionalArgument('name','Worker driver name');        
     }
 
     /**
@@ -37,17 +37,23 @@ class StartWorkerCommand extends ConsoleCommand
      */
     protected function executeCommand($input,$output)
     {
+        global $container;
+
         $this->showTitle();
 
-        $driver = Arikaim::get('driver')->create('reactphp-queue');
-        if ($driver == null) {
-            $this->showError('React php queue dievr not installed.');
+        $driverName = $input->getArgument('name');
+        if (empty($driverName) == true) {
+            $this->showError('Worker driver name required!');
             return;
         }
 
-        $this->writeLn('Host ' . $driver->getHost() . ':' . $driver->getPort());
-       
-        // start server
+        $driver = $container->get('driver')->create($driverName);
+        if ($driver == null) {
+            $this->showError($driverName . ' driver not installed.');
+            return;
+        }
+ 
+        // start queue worker
         $driver->run();
 
         $status = ($driver->isRunning() == true) ? 'running' : 'stop';

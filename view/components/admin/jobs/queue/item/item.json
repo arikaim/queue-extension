@@ -1,0 +1,7 @@
+{
+    "labels": {
+        "empty": "Queue is empty",
+        "recurring": "Recurring Job",
+        "scheduled": "Scheduled Job"
+    }
+}

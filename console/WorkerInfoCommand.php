@@ -10,7 +10,6 @@
 namespace Arikaim\Extensions\Queue\Console;
 
 use Arikaim\Core\Console\ConsoleCommand;
-use Arikaim\Core\Arikaim;
 
 /**
  *  Queue worker details command 
@@ -38,29 +37,36 @@ class WorkerInfoCommand extends ConsoleCommand
      */
     protected function executeCommand($input,$output)
     {
+        global $container;
+
         $this->showTitle();
+        
         $name = $input->getArgument('name');
         if (empty($name) == true) {
-            $this->showError('Not valid queue driver name.');
+            $this->showError('Not valid queue worker driver name.');
             return;
         }
 
-        $driver = Arikaim::get('driver')->create($name);
-        if (\is_object($driver) == false) {
-            $this->showError('Not valid queue driver name.');
+        $driver = $container->get('driver')->create($name);
+        if ($driver == null) {
+            $this->showError('Not valid queue worker driver name.');
             return;
         }
 
-        $this->writeLn('Host ' . $driver->getHost() . ':' . $driver->getPort());
-        $status = ($driver->isRunning() == true) ? 'running' : 'stop';
-        $this->writeLn('Status ' . $status);
-        
-        $details = $driver->getDetails();
+        $this->table()->setHeaders(['Name','Value']);
+        $this->table()->setStyle('compact');
 
-        $this->writeLn('Command ' . $details['command'] ?? '');
-        $this->writeLn('Interval ' . $details['interval'] ?? '');
-        $this->writeLn('User ' . $details['user'] ?? '');
-        $this->writeLn('Jobs ' . print_r($details['jobs'] ?? []));
+        foreach ($driver->getDetails() as $key => $value) {
+
+            if (is_array($value) == true) {
+                continue;
+            }
+          
+            $this->table()->addRow([$key, $value]);
+        }
+
+        $this->table()->render();
+        $this->newLine();
 
         $this->showCompleted();       
     }

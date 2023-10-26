@@ -8,7 +8,7 @@
                 <div>
                     <i class="icon blue angle right"></i>          
                 </div>
-                {% if job.isRecurring() == true %} 
+                {% if job.recuring_interval is not empty %}
                     <div class="px-1">
                         <i class="redo alternate icon blue" title="{{ labels.recurring }}"></i>
                     </div>                
@@ -22,15 +22,15 @@
                     uuid="{{ job.uuid }}">
                     <i class="icon red trash"></i>
                 </button>
-                {% if job.isScheduled() == true %}
-                    <i class="calendar alternate outline icon" title="{{ labels.scheduled }}"></i>
+                {% if job.schedule_time is not empty %}
+                    <i class="calendar alternate outline icon" title="{{ labels.scheduled }}"></i>                                                                                                                        
                 {% endif %}
                 <a class="link job-details font-bold px-2" uuid="{{ job.uuid }}">
                     {{ job.name }}  
                 </a>                           
             </div>
             <div class="flex flex-row items-center">
-                <div class="pt-2 text-gray-600 mini basic right floated">
+                <div class="text-gray-600 mini basic right floated">
                     <i class="icon outline calendar"></i>
                     {{ job.date_created|dateTimeFormat }}
                 </div>    

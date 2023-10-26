@@ -1,0 +1,34 @@
+{% if uuid is not empty %}
+    {% set job = createModel('Queue').findById(uuid) %}
+{% endif %}
+<div class="item" id="row_{{ job.uuid }}">
+    <div class="content">                      
+        <div class="flex flex-row items-center">
+            <div class="flex-grow flex flex-row items-center">
+                <div>
+                    <i class="icon blue angle right"></i>          
+                </div>
+                          
+                {% if job.schedule_time is not empty %}
+                    <i class="calendar alternate outline icon" title="{{ labels.scheduled }}"></i>
+                {% endif %}
+                <span class="link job-details font-bold px-2" uuid="{{ job.uuid }}">
+                    {{ job.name }}  
+                </span>                           
+            </div>
+            <div class="flex flex-row items-center">
+                {% if job.recuring_interval is not empty %}
+                    <div class="px-1">
+                        <i class="redo alternate icon blue" title="{{ labels.recurring }}"></i>
+                    </div>      
+                    {{ component('queue::admin.interval.label',{ interval: job.recuring_interval }) }}                         
+                {% endif %}   
+                <div class="text-gray-600 mini basic right floated">
+                    <i class="icon outline calendar"></i>
+                    {{ job.date_created|dateTimeFormat }}
+                </div>    
+                {{ component('queue::admin.queue.jobs.status.label',{ status: job.status, class: 'mini basic right floated' }) }} 
+            </div>
+        </div>                               
+    </div>     
+</div>

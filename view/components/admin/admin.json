@@ -10,7 +10,8 @@
         }          
     },
     "labels": {             
-        "queue": "Queue Worker",   
+        "worker": "Worker",   
+        "queue": "Queue",   
         "jobs": "Jobs",      
         "settings": "Settings"       
     }  

@@ -10,7 +10,6 @@
 namespace Arikaim\Extensions\Queue\Console;
 
 use Arikaim\Core\Console\ConsoleCommand;
-use Arikaim\Core\Arikaim;
 
 /**
  * Stop queue worker 
@@ -26,6 +25,7 @@ class StopWorkerCommand extends ConsoleCommand
     {
         $this->setName('worker:stop');
         $this->setDescription('Stop queue worker');        
+        $this->addOptionalArgument('name','Worker driver name');        
     }
 
     /**
@@ -37,15 +37,21 @@ class StopWorkerCommand extends ConsoleCommand
      */
     protected function executeCommand($input,$output)
     {
+        global $container;
+
         $this->showTitle();
 
-        $driver = Arikaim::get('driver')->create('reactphp-queue');
-        if ($driver == null) {
-            $this->showError('React php queue dievr not installed.');
+        $driverName = $input->getArgument('name');
+        if (empty($driverName) == true) {
+            $this->showError('Worker driver name required!');
             return;
         }
 
-        $this->writeLn('Host ' . $driver->getHost() . ':' . $driver->getPort());
+        $driver = $container->get('driver')->create($driverName);
+        if ($driver == null) {
+            $this->showError($driverName . ' driver not installed.');
+            return;
+        }
        
         // stop server
         $driver->stop();

@@ -1,6 +1,7 @@
 {
     "labels": {
-        "details": "Details",       
+        "details": "Details",
+        "driver": "Queue Driver",       
         "demo": "Demo mode"    
     }   
 }

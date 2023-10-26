@@ -4,6 +4,7 @@
         "package": "Package",
         "info": "Job Details",
         "push": "Push to queue",
+        "queue": "Job in queue",
         "config": "Job Config"                
     }
 }
