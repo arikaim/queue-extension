@@ -1,72 +1,65 @@
-/**
- *  Arikaim
- *  @copyright  Copyright (c)  <info@arikaim.com>
- *  @license    http://www.arikaim.com/license
- *  http://www.arikaim.com
- */
 'use strict';
 
-function JobsRegistryView() {
-    var self = this;
+function Jobs() {
 
-    this.init = function() {     
-        this.loadMessages('queue::admin');
-        paginator.init('jobs_registry_rows',"queue::admin.jobs.view.items",'jobs.registry'); 
-    };
-
-    this.loaItems = function() {
-        return arikaim.page.loadContent({
-            id: 'jobs_rows',           
-            component: 'queue::admin.queue.jobs.view.items'                  
-        },function(result) {
-            self.initRows();
-        });         
-    };
-
-    this.loadJobItem = function(uuid) {
-        return arikaim.page.loadContent({
-            id: 'row_' + uuid,           
-            component: 'queue::admin.queue.jobs.view.item',
-            params: { uuid: uuid }            
-        },function(result) {
-            self.initRows();
-        });  
-    };
-
-    this.initDetails = function() {
-
-        arikaim.ui.button('.run-job',function(element) {
-            var uuid = $(element).attr('uuid');
-
-            return jobs.run(uuid,function(result) {
-                self.loadDetails(result.uuid);                
-            });
-        });
-
-    };
-
-    this.initRows = function() {
+    this.enable = function(uuid, onSuccess, onError) {
+        var data = { 
+            uuid: uuid,
+            status: 1 
+        };
         
-        arikaim.ui.loadComponentButton('.job-action');
-        
-        arikaim.ui.button('.job-details',function(element) {
-            var uuid = $(element).attr('uuid');            
-            self.loadDetails(uuid);
-        });
+        return arikaim.put('/api/admin/queue/job/status',data,onSuccess,onError)
     };
 
-    this.loadDetails = function(uuid) {
-        return arikaim.page.loadContent({
-            id: 'job_details',           
-            component: 'queue::admin.queue.jobs.details',
-            params: { uuid: uuid }            
-        });  
-    }
+    this.disable = function(uuid, onSuccess, onError) {
+        var data = { 
+            uuid: uuid,
+            status: 5 // Suspended 
+        };
+
+        return arikaim.put('/api/admin/queue/job/status',data,onSuccess,onError);           
+    };
+
+    this.deleteCompleted = function(onSuccess, onError) {
+        return arikaim.delete('/api/admin/queue/job/completed/delete',onSuccess,onError);           
+    };
+
+    this.delete = function(uuid, onSuccess, onError) {
+        return arikaim.delete('/api/admin/queue/job/delete/' + uuid,onSuccess,onError);           
+    };
+
+    this.saveConfig = function(formId, onSuccess, onError) {
+        return arikaim.put('/api/admin/queue/job/config',formId,onSuccess,onError);      
+    };
+
+    this.updateInterval = function(uuid, interval, onSuccess, onError) {
+        var data = {
+            uuid: uuid,
+            interval: interval
+        };
+
+        return arikaim.put('/api/admin/queue/job/config/interval',data,onSuccess,onError);      
+    };
+
+    this.run = function(formId, onSuccess, onError) {
+        return arikaim.put('/api/admin/queue/job/run',formId,onSuccess,onError)
+    };
+
+    this.push = function(formId, onSuccess, onError) {
+        return arikaim.put('/api/admin/queue/job/push',formId,onSuccess,onError)
+    };
 }
 
-var jobsRegistryView = createObject(JobsRegistryView,ControlPanelView);
+var jobs = new Jobs();
 
 arikaim.component.onLoaded(function() {
-    jobsRegistryView.init();
-    jobsRegistryView.initRows();
+    $('#extensions_dropdown').dropdown({
+        onChange: function(name) {              
+            arikaim.page.loadContent({
+                id: 'jobs_view_content',
+                component: "queue::admin.jobs.view",
+                params: { package_name : name }               
+            });     
+        }
+    });
 });

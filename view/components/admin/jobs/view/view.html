@@ -1,0 +1,12 @@
+<div class="flex flex-row items-start mt-4 p-4">
+    <div class="w-1/2 hidden pr-4" id="job_registry_details">
+    </div>
+    <div class="flex-grow w-full p-1">
+        <div class="ui cards" id="jobs_registry_rows" component="queue::admin.jobs.view.items">        
+            {{ component('queue::admin.jobs.view.items',{ package_name: package_name }) }}                   
+        </div>
+        <div id="paginator">
+            {{ component('semantic~paginator',{ namespace: 'jobs.registry' }) }}
+        </div>
+    </div>
+</div>

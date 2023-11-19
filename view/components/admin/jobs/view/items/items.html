@@ -1,4 +1,4 @@
-{% set items = createModel('JobsRegistry').orderBy('id') %}
+{% set items = createModel('JobsRegistry').packageQuery(package_name,'extension').orderBy('id') %}
 {% set items = paginate(items,'jobs.registry') %}
 
 {% set items = items.getItems() %}
@@ -9,5 +9,5 @@
 {% endif %}
 
 {% for job in items %}
-    {{ component('queue::admin.jobs.item',{ item: job }) }}   
+    {{ component('queue::admin.jobs.view.item',{ item: job }) }}   
 {% endfor %}

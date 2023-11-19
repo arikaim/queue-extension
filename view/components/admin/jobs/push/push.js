@@ -3,7 +3,7 @@
 arikaim.component.onLoaded(function() {
     arikaim.ui.form.addRules('#push_job_form',{});
 
-    $('.checkbox').checkbox();
+    $('.type-checkbox').checkbox();
     $('.interval-dropdown').dropdown({});
     
     arikaim.ui.form.onSubmit("#push_job_form",function() {  

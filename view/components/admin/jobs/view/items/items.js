@@ -1,7 +1,7 @@
 'use strict';
 
 arikaim.component.onLoaded(function() {
-    safeCall('jobsView',function(obj) {
+    safeCall('jobsRegistryView',function(obj) {
         obj.initRows();
     },true);   
 });

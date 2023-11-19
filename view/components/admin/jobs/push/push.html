@@ -21,7 +21,7 @@
                     </label>
                     <div>
                         <div class="field">
-                            <div class="ui radio checkbox checked">
+                            <div class="ui radio checkbox checked type-checkbox">
                                 <input type="radio" name="type" value="single" checked class="hidden">
                                 <label>
                                     {{ type.single }}
@@ -29,7 +29,7 @@
                             </div>    
                         </div>
                         <div class="field">
-                            <div class="ui radio checkbox ">
+                            <div class="ui radio checkbox type-checkbox">
                                 <input type="radio" name="type" value="recurring" class="hidden">
                                 <label>
                                     {{ type.recurring }}
@@ -40,7 +40,7 @@
                             </div>
                         </div>
                         <div class="field">
-                            <div class="ui radio checkbox ">
+                            <div class="ui radio checkbox type-checkbox">
                                 <input type="radio" name="type" value="scheduled" class="hidden">
                                 <label>
                                     {{ type.scheduled }}
@@ -60,7 +60,9 @@
                 <h4>
                     {{ labels.properties }}
                 </h4>
-                {{ component('semantic~properties.items',{ items: properties }) }}    
+                <div class="ui segment">
+                    {{ component('semantic~properties.items',{ items: properties }) }}    
+                </div>
                 <div>
                     {{  component('semantic~form.footer',{
                             button_title: buttons.push
