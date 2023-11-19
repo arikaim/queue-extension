@@ -2,11 +2,7 @@
     {% set item = createModel('JobsRegistry').findById(uuid) %}
 {% endif %}
 {% set job = service('queue').create(item.name) %}
-{%  set queued_jobs = service('queue').getJobs({ 
-        name: item.name,
-        status: constant('Arikaim\\Core\\Interfaces\\Job\\JobInterface::STATUS_PENDING')
-    }) 
-%}
+{% set queued_jobs = service('queue').getJobsDue(item.name) %}
 {% component 'semantic~panel' %}  
     <div class="mt-2">
         <h4>
@@ -23,6 +19,9 @@
             {{ labels.queue }}
         </h4>
         <div class="ui middle aligned divided relaxed list">
+            {% if queued_jobs|length == 0 %}
+                ...
+            {% endif %}
             {% for job in queued_jobs %}
                 {{ component('queue::admin.jobs.queue.item',{ job: job }) }}   
             {% endfor %}
