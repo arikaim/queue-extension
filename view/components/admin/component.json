@@ -1,4 +1,9 @@
 {
+    "include": {
+        "js":[
+            "queue::admin.jobs"
+        ]
+    },
     "access": {
         "auth": "session",
         "permission": "ControlPanel:full",
