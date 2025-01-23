@@ -2,14 +2,8 @@
     "title": "Push Job",
     "icon": "plus",
     "labels": {
-        "job": "Job",
-        "type": "Type",
+        "job": "Job",      
         "properties": "Properties"
-    },
-    "type": {
-        "single": "Run once",
-        "recurring": "Recurring",
-        "scheduled": "Scheduled"
     },
     "buttons": {
         "push": "Push"

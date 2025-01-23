@@ -32,20 +32,22 @@ class JobsControlPanel extends ControlPanelApiController
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
-     * @param Validator $data
-     * @return Psr\Http\Message\ResponseInterface
+     * @param \Arikaim\Core\Validator\Validator $data
+     * @return mixed
      */
     public function deleteCompletedController($request, $response, $data)
     {
-        $this->onDataValid(function($data) {                 
-            $result = $this->get('queue')->deleteJobs(['status' => JobInterface::STATUS_COMPLETED]);
+        $data
+            ->validate(true);      
+
+        $result = $this
+            ->get('queue')
+            ->deleteJobs(['status' => JobInterface::STATUS_COMPLETED]);
            
-            $this->setResponse($result,function() {                  
-                $this
-                    ->message('jobs.completed');   
-            },'errors.jobs.completed');
-        });
-        $data->validate();      
+        $this->setResponse($result,function() {                  
+            $this
+                ->message('jobs.completed');   
+        },'errors.jobs.completed');
     }
 
     /**
@@ -53,23 +55,22 @@ class JobsControlPanel extends ControlPanelApiController
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
-     * @param Validator $data
-     * @return Psr\Http\Message\ResponseInterface
+     * @param \Arikaim\Core\Validator\Validator $data
+     * @return mixed
      */
     public function deleteJobController($request, $response, $data)
     {
-        $this->onDataValid(function($data) {       
-            $uuid = $data->get('uuid');
+        $data
+            ->validate(true);      
 
-            $result = $this->get('queue')->deleteJob($uuid);
-           
-            $this->setResponse($result,function() use($uuid) {                  
-                $this
-                    ->message('jobs.delete')                   
-                    ->field('uuid',$uuid);   
-            },'errors.jobs.delete');
-        });
-        $data->validate();      
+        $uuid = $data->get('uuid');
+        $result = $this->get('queue')->deleteJob($uuid);
+        
+        $this->setResponse($result,function() use($uuid) {                  
+            $this
+                ->message('jobs.delete')                   
+                ->field('uuid',$uuid);   
+        },'errors.jobs.delete');        
     }
     
     /**
@@ -77,8 +78,8 @@ class JobsControlPanel extends ControlPanelApiController
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
-     * @param Validator $data
-     * @return Psr\Http\Message\ResponseInterface
+     * @param \Arikaim\Core\Validator\Validator $data
+     * @return mixed|void
      */
     public function setStatusController($request, $response, $data)
     {
@@ -88,7 +89,11 @@ class JobsControlPanel extends ControlPanelApiController
         $uuid = $data->get('uuid');  
         $status = $data->get('status',1);
 
-        $result = $this->get('queue')->getStorageDriver()->setJobStatus($uuid,$status);
+        $result = $this
+            ->get('queue')
+            ->getStorageDriver()
+            ->setJobStatus($uuid,$status);
+
         $this->setResponse($result,function() use($status,$uuid) {                  
             $this
                 ->message('jobs.status')
@@ -102,8 +107,8 @@ class JobsControlPanel extends ControlPanelApiController
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
-     * @param Validator $data
-     * @return Psr\Http\Message\ResponseInterface
+     * @param \Arikaim\Core\Validator\Validator $data
+     * @return mixed|void
     */
     public function saveConfigController($request, $response, $data)
     {
@@ -140,32 +145,32 @@ class JobsControlPanel extends ControlPanelApiController
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
-     * @param Validator $data
-     * @return Psr\Http\Message\ResponseInterface
+     * @param \Arikaim\Core\Validator\Validator $data
+     * @return mixed|void
     */
     public function updateIntervalController($request, $response, $data)
     {
-        $this->onDataValid(function($data) {            
-            $uuid = $data->get('uuid');           
-            $interval = $data->get('interval'); 
+        $data
+            ->validate(true);       
+   
+        $uuid = $data->get('uuid');           
+        $interval = $data->get('interval'); 
 
-            $job = $this->get('queue')->getStorageDriver()->findById($uuid);
-            if (\is_object($job) == false) {
-                $this->error('Not valid job Id.');
-                return false;
-            }       
-            $result = $job->update([
-                'recuring_interval' => $interval
-            ]);   
+        $job = $this->get('queue')->getStorageDriver()->findById($uuid);
+        if ($job == null) {
+            $this->error('Not valid job Id.');
+            return false;
+        }       
+        $result = $job->update([
+            'recuring_interval' => $interval
+        ]);   
 
-            $this->setResponse(($result !== false),function() use($job) {                  
-                $this
-                    ->message('jobs.interval')  
-                    ->field('interval',$job['recuring_interval'])                
-                    ->field('uuid',$job['uuid']);   
-            },'errors.jobs.interval');          
-        });
-        $data->validate();       
+        $this->setResponse(($result !== false),function() use($job) {                  
+            $this
+                ->message('jobs.interval')  
+                ->field('interval',$job['recuring_interval'])                
+                ->field('uuid',$job['uuid']);   
+        },'errors.jobs.interval');          
     }
 
     /**
@@ -173,8 +178,8 @@ class JobsControlPanel extends ControlPanelApiController
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
-     * @param Validator $data
-     * @return Psr\Http\Message\ResponseInterface
+     * @param \Arikaim\Core\Validator\Validator $data
+     * @return mixed|void
     */
     public function run($request, $response, $data)
     {
@@ -201,8 +206,8 @@ class JobsControlPanel extends ControlPanelApiController
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
-     * @param Validator $data
-     * @return Psr\Http\Message\ResponseInterface
+     * @param \Arikaim\Core\Validator\Validator $data
+     * @return mixed|void
     */
     public function push($request, $response, $data)
     {
@@ -235,10 +240,16 @@ class JobsControlPanel extends ControlPanelApiController
         }
 
         // set props values
-        $job->descriptor()->collection('parameters')->setPropertyValues($data->toArray());
+        $job
+            ->descriptor()
+            ->collection('parameters')
+            ->setPropertyValues($data->toArray());
+
         $params = $job->descriptor()->collection('parameters')->getValues();
 
-        $result = $this->get('queue')->push($model->name,$params,$model->package_name,$interval,$scheduleTime);
+        $result = $this
+            ->get('queue')
+            ->push($model->name,$params,$model->package_name,$interval,$scheduleTime);
 
         $this->setResponse($result,function() use($uuid) {                  
             $this

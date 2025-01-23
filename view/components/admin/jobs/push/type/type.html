@@ -1,0 +1,42 @@
+<div class="field">
+    <label>
+        {{ title|default(labels.type) }}
+    </label>
+    <div>
+        <div class="field">
+            <div class="ui radio checkbox checked type-checkbox">
+                <input type="radio" name="type" value="single" checked class="hidden">
+                <label>
+                    {{ type.single }}
+                </label>
+            </div>    
+        </div>
+        <div class="field">
+            <div class="ui radio checkbox type-checkbox">
+                <input type="radio" name="type" value="recurring" class="hidden">
+                <label>
+                    {{ type.recurring }}
+                </label>
+            </div>
+            <div class="px-10">                 
+                {{ component('queue::admin.interval',{ class: 'mini selection' }) }}
+            </div>
+        </div>
+        <div class="field">
+            <div class="ui radio checkbox type-checkbox">
+                <input type="radio" name="type" value="scheduled" class="hidden">
+                <label>
+                    {{ type.scheduled }}
+                </label>
+            </div>
+            <div class="pl-4 w-1/2">
+                {{  component('semantic~form.fields.calendar',{
+                        id: 'schedule_time_calendar',
+                        field_name: 'schedule_time',
+                        field_value: today()
+                    }) 
+                }}   
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+{
+    "type": {
+        "single": "Run once",
+        "recurring": "Recurring",
+        "scheduled": "Scheduled"
+    },
+    "labels": {       
+        "type": "Type"        
+    }
+}
