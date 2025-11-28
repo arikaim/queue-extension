@@ -19,6 +19,7 @@
         "priority": "Priority",
         "executed": "Executed",       
         "worker": "Worker",
+        "user": "User Id",
         "extension": "Extension",
         "date": "Created"      
     }
