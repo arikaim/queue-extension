@@ -32,8 +32,8 @@ class QueueControlPanel extends ControlPanelApiController
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
-     * @param Validator $data
-     * @return Psr\Http\Message\ResponseInterface
+     * @param \Arikaim\Core\Validator\Validator $data
+     * @return mixed
     */
     public function getStatusController($request, $response, $data) 
     {         
@@ -58,8 +58,8 @@ class QueueControlPanel extends ControlPanelApiController
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
-     * @param Validator $data
-     * @return Psr\Http\Message\ResponseInterface
+     * @param \Arikaim\Core\Validator\Validator $data
+     * @return mixed
     */
     public function startController($request, $response, $data) 
     {         
@@ -88,8 +88,8 @@ class QueueControlPanel extends ControlPanelApiController
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
-     * @param Validator $data
-     * @return Psr\Http\Message\ResponseInterface
+     * @param \Arikaim\Core\Validator\Validator $data
+     * @return mixed
     */
     public function stopController($request, $response, $data) 
     {         
@@ -106,9 +106,6 @@ class QueueControlPanel extends ControlPanelApiController
         }
     
         $result = $driver->stop();
-        var_dump($result);
-        exit();
-        
         
         $this->setResponse($result,function() use($name) {                                
             $this
@@ -122,8 +119,8 @@ class QueueControlPanel extends ControlPanelApiController
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \Psr\Http\Message\ResponseInterface $response
-     * @param Validator $data
-     * @return Psr\Http\Message\ResponseInterface
+     * @param \Arikaim\Core\Validator\Validator $data
+     * @return mixed
      */
     public function runCronCommandController($request, $response, $data)
     {         
