@@ -1,10 +1,9 @@
 'use strict';
 
 arikaim.component.onLoaded(function() {
-    $('#drivers_dropdown').dropdown({
-        onChange: function(value) {                    
-            options.save('queue.worker.name',value);
-        }
+    $('#drivers_dropdown').on('change', function() {
+        var name = $(this).val();                      
+        options.save('queue.worker.name',name);       
     });
 
     arikaim.events.on('driver.config',function(element,name,category) {      

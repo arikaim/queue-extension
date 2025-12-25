@@ -1,17 +1,12 @@
-<div class="ui segment">     
-    <div class="ui stackable two column grid">      
-        <div class="column">
-            <div class="flex">
-                <div class="font-bold p-2">
-                    {{ labels.extension }}
-                </div> 
-                {{ component("system:admin.extensions.dropdown",{ selected: extension, class: '' }) }}  
-            </div>  
+<div class="{{ theme.panel }}">            
+    <div class="flex">
+        <div class="font-bold p-2">
+            {{ labels.extension }}
+        </div> 
+        <div class="w-96">
+            {{ component("system:admin.extensions.dropdown",{ selected: extension, class: '' }) }}  
         </div>
-        <div class="right aligned column">          
-            {{ component('semantic~paginator.dropdown',{ class:'mini', namespace: 'jobs.registry' }) }}
-        </div>
-    </div>
+    </div>            
 </div>
 <div id="jobs_view_content">
     {{ component('queue::admin.jobs.view',{}) }}

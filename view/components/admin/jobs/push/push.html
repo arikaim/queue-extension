@@ -4,26 +4,27 @@
 {% set job = service('queue').create(item.name) %}
 {% set properties = job.descriptor().collection('parameters') %}
 
-{% component 'semantic~panel' %}  
+{% component 'system:admin.panel' %}   
+    {% set size = 'min-w-1/2' %}
     <div class="mt-2">
-        <h4>
+        <h4 class="font-bold text-sm">
             {{ labels.job }}
         </h4>
-        <div class="ui basic label">
+        <div class="badge badge-sm badge-outline">
             {{ item.name }}
         </div>
         <div class="mt-4">
-            <form class="ui form" id="push_job_form">  
+            <form class="form" id="push_job_form">  
                 <input type="hidden" name="uuid" id="uuid" value="{{ item.uuid }}"> 
                 {{ component('queue::admin.jobs.push.type',{}) }}
-                <h4>
+                <h4 class="mt-8 font-bold">
                     {{ labels.properties }}
                 </h4>
-                <div class="ui segment">
-                    {{ component('semantic~properties.items',{ items: properties }) }}    
+                <div class="mt-2">
+                    {{ component('system:admin.properties.items',{ items: properties }) }}    
                 </div>
                 <div>
-                    {{  component('semantic~form.footer',{
+                    {{  component('system:form.footer',{
                             button_title: buttons.push
                         }) 
                     }}   

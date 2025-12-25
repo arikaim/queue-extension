@@ -7,9 +7,9 @@
     {% endfor %}
 {% endif %}
 
-<div class="ui label {{ class|default('basic') }}" title="{{ interval }}">
+<div class="badge badge-sm badge-outline {{ class|default('badge-secondary') }}" title="{{ interval }}">
     {{ labels.interval }}
-    <span class="p-1 text-blue-500">
+    <span class="text-blue-500">
         {{ selected_title }}
     </span>
 </div>  

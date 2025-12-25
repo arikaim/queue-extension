@@ -6,19 +6,25 @@
         {% endif %}
     {% endfor %}
 {% endif %}
-<div class="ui dropdown interval-dropdown {{ class }}">
-    <input name="{{ field_name|default('interval') }}" type="hidden">
-    <div class="text">
-        {{ selected_title }}     
-    </div>
-    <i class="dropdown icon"></i>   
-    <div class="ui menu">
-        {% for item in items %}
-            {% if item.interval not in skip %}          
-                <div class="item" data-value="{{ item.interval }}">                        
-                    {{ item.title }}
-                </div>   
-            {% endif %} 
-        {% endfor %}           
-    </div>
-</div>
+
+<select 
+    name="{{ field_name|default('interval') }}"
+    class="select {{ class|default('select-sm') }} interval-dropdown" 
+    id="interval_dropdown">
+    <option 
+        disabled
+        class="text-gray-100" 
+        {{ (selected is empty) ? 'selected' : '' }} 
+        value="">             
+        {{ labels.empty }}
+    </option>     
+    {% for item in items %}   
+        {% if item.interval not in skip %}                     
+        <option           
+            {{ item.interval|ifthen(selected,'selected') }}
+            value="{{ item.interval }}">             
+            {{ item.title }}
+        </option>    
+        {% endif %}    
+    {% endfor %}   
+</select>

@@ -2,9 +2,11 @@
     {% set item = createModel('JobsRegistry').findById(uuid) %}
 {% endif %}
 {% set job = service('queue').create(item.name) %}
-{% component 'semantic~panel' %}   
+
+{% component 'system:admin.panel' %}   
+    {% set size = 'min-w-1/2' %}
     <div class="mt-2">
-        <table class="ui very basic definition table">
+        <table class="{{ theme.table.details }}">
             <thead>
                 <tr>
                     <th class="two wide"></th>
@@ -13,48 +15,48 @@
             </thead>
             <tbody>
                 <tr>
-                    <td class="right aligned">{{ labels.id }}</td>
+                    <td class="{{ theme.table.field.label }}">{{ labels.id }}</td>
                     <td>{{ item.uuid }}</td>
                 </tr>
                 <tr>
-                    <td class="right aligned">{{ labels.name }}</td>
+                    <td class="{{ theme.table.field.label }}">{{ labels.name }}</td>
                     <td>
                         {{ item.name }}
                     </td>
                 </tr>
                 <tr>
-                    <td class="right aligned">{{ labels.title }}</td>
+                    <td class="{{ theme.table.field.label }}">{{ labels.title }}</td>
                     <td>
                         {{ job.descriptor().getValue('title')|default(item.name) }}
                     </td>
                 </tr>
                 <tr>
-                    <td class="right aligned">{{ labels.description }}</td>
+                    <td class="{{ theme.table.field.label }}">{{ labels.description }}</td>
                     <td>
                         {{ job.descriptor().getValue('description')|default(item.name) }}
                     </td>
                 </tr>                 
                 <tr>
-                    <td class="right aligned">{{ labels.priority }}</td>
+                    <td class="{{ theme.table.field.label }}">{{ labels.priority }}</td>
                     <td>
                         {{ job.getPriority() }}
                     </td>
                 </tr>
                 <tr>
-                    <td class="right aligned">{{ labels.date }}</td>
+                    <td class="{{ theme.table.field.label }}">{{ labels.date }}</td>
                     <td>
                         {{ item.date_created|dateTimeFormat }}
                     </td>
                 </tr>
                 <tr>
-                    <td class="right aligned">{{ labels.handler }}</td>
+                    <td class="{{ theme.table.field.label }}">{{ labels.handler }}</td>
                     <td>
                         {{ item.handler_class }}
                     </td>
                 </tr>
                 {% if item.package_name is not empty %}  
                     <tr>
-                        <td class="right aligned">{{ labels.package }}</td>
+                        <td class="{{ theme.table.field.label }}">{{ labels.package }}</td>
                         <td>
                             <div class="ui basic horizontal label">
                                 {{ item.package_name }}
@@ -65,21 +67,29 @@
                 {% endif %}                
             </tbody>  
         </table>  
-        <h4>
+        <h4 class="my-2 font-bold">
             {{ labels.properties }}
         </h4>   
-        {{ component('semantic~properties.details',{ properties: job.descriptor().collection('parameters') }) }}   
+        {{  component('system:admin.properties.details',{ 
+                properties: job.descriptor().collection('parameters') 
+            }) 
+        }}   
         {% if item.options is iterable %}
-        <h4>
+        <h4 class="my-2 font-bold">
             {{ labels.values }}
         </h4> 
-        <div>
-            {{ component('semantic~options',{ options: item.options, hide_title: true }) }}                      
-        </div> 
+        {{  component('system:admin.options',{ 
+                options: item.options, 
+                hide_title: true 
+            }) 
+        }}                             
         {% endif %}      
-        <h4>
+        <h4 class="my-2 font-bold">
             {{ labels.result }}
         </h4>   
-        {{ component('semantic~properties.details',{ properties: job.descriptor().collection('result') }) }}    
+        {{  component('system:admin.properties.details',{ 
+                properties: job.descriptor().collection('result') 
+            }) 
+        }}    
     </div>
 {% endcomponent %}

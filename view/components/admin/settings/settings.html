@@ -1,9 +1,18 @@
-{% component 'semantic~tabs.vertical.content' %}
+{% component 'system:admin.panel' %}
+    {% set size = 'w-1/3' %}
+    {% set hide_close = true %}
     {% set queue_worker = getOption('queue.worker.name') %}
     <div class="mt-8">      
-        <h4>{{ labels.driver }}</h4>      
-        {{ component('system:admin.drivers.dropdown',{ selected: queue_worker, category: 'queue.worker', calss: 'fluid' }) }}
-        <div class="ui horizontal divider header">
+        <h4 class="font-bold">
+            {{ labels.driver }}
+        </h4>      
+        {{  component('system:admin.drivers.dropdown',{ 
+                selected: queue_worker, 
+                category: 'queue.worker', 
+                calss: '' 
+            }) 
+        }}
+        <div class="horizontal divider my-4">
             {{ labels.drivers }}
         </div>
         <div id="driver_config">

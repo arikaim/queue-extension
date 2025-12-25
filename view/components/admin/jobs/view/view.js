@@ -12,6 +12,8 @@ function JobsRegistryView() {
     this.init = function() {     
         this.loadMessages('queue::admin');
         paginator.init('jobs_registry_rows',"queue::admin.jobs.view.items",'jobs.registry'); 
+        
+        this.initRows();
     };
 
     this.loaItems = function() {
@@ -45,14 +47,8 @@ function JobsRegistryView() {
 
     };
 
-    this.initRows = function() {
-        
-        arikaim.ui.loadComponentButton('.job-action');
-        
-        arikaim.ui.button('.job-details',function(element) {
-            var uuid = $(element).attr('uuid');            
-            self.loadDetails(uuid);
-        });
+    this.initRows = function() {        
+        arikaim.ui.loadComponentButton('.job-action');       
     };
 
     this.loadDetails = function(uuid) {
@@ -67,6 +63,5 @@ function JobsRegistryView() {
 var jobsRegistryView = createObject(JobsRegistryView,ControlPanelView);
 
 arikaim.component.onLoaded(function() {
-    jobsRegistryView.init();
-    jobsRegistryView.initRows();
+    jobsRegistryView.init();   
 });

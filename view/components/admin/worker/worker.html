@@ -2,10 +2,10 @@
 {% if worker_name is empty %}
     {{ component('semantic~message.warning',{ message: message }) }}        
 {% else %}
-    <div class="ui segment">
-        <span class="font-bold px-1">
+    <div class="flex flex-row items-center {{ theme.panel }}">
+        <div class="font-bold px-1">
             {{ labels.driver }}
-        </span>
+        </div>
         {{  component('system:admin.drivers.dropdown',{ 
                 selected: worker_name,
                 category: 'queue.worker', 
@@ -13,13 +13,9 @@
             }) 
         }}  
     </div>
-    <div class="ui segment"> 
-        <div class="ui grid">   
-            <div class="column">
-                <div class="flex flex-row items-start w-full" id="worker_status_content">
-                    {{ component('queue::admin.worker.status',{ worker_name: worker_name }) }}                          
-                </div>    
-            </div>
-        </div> 
+    <div class="mt-4 {{ theme.panel }}">        
+        <div class="flex flex-row items-start w-full" id="worker_status_content">
+            {{ component('queue::admin.worker.status',{ worker_name: worker_name }) }}                          
+        </div>             
     </div>
 {% endif %}

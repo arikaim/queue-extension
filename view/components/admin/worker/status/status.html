@@ -3,52 +3,56 @@
 {% set worker = service('driver').create(worker_name) %} 
 {% set details = worker.getDetails() %}
 <div class="p-2 w-1/2">
-    <h3 class="header">
+    <h4 class="font-bold text-lg">
         {% if worker.isRunning() == true %}    
             <i class="check olive icon" title="{{ labels.running }}"></i>                   
         {% else %}  
             <i class="exclamation triangle orange icon" title="{{ labels.disabled }}"></i>
         {% endif %}
         {{ worker.getTitle() }}
-    </h3>
-    <p class="mt-4 p-2">
+    </h4>
+    <p class="mt-4">
         {{ worker.getDescription() }}
     </p>
 
     {% if demo_mode == true %}
-        <div class="ui warning message">
+        <div class="mt-4 alert alert-warning alert-sm">
             {{ labels.demo }}
         </div>
     {% else  %}
         {% if worker.isRunning() == true %}
-            <button class="ui basic button" id="stop_worker" worker-name="{{ worker_name }}">
-                <i class="icon orange stop"></i>
+            <button 
+                class="mt-4 {{ theme.buttons.delete }}" 
+                id="stop_worker" 
+                worker-name="{{ worker_name }}">               
                 {{ buttons.stop }}
             </button>
         {% else %}
-            <button class="ui basic button" id="start_worker" worker-name="{{ worker_name }}">
-                <i class="play icon olive"></i>
+            <button 
+                class="mt-4 {{ theme.buttons.green }}" 
+                id="start_worker" 
+                worker-name="{{ worker_name }}">             
                 {{ buttons.run }}
             </button>
         {% endif %}
     {% endif %}
 </div>
-<div class="p-2 w-1/2 flex-grow border-l border-0 border-solid border-gray-400">
-    <h4 class="pt-1">
-        <i class="icon blue info"></i>
+<div 
+    class="p-2 w-1/2 flex-grow border-l border-0 border-solid border-gray-400">
+    <h4 class="pt-1 font-bold">
         {{ labels.details }}
     </h4>
-    <table class="ui very basic definition mini table">
+    <table class="{{ theme.table.details }}">
         <tbody>
             {% for key, value in details %}
             <tr>
-                <td class="one wide right aligned">{{ key }}</td>
+                <td class="{{ theme.table.field.label }}">{{ key }}</td>
                 <td>
                     {% if value is iterable %}
                         <ol>
                             {% for key, item in value %}
                                 <li>
-                                    <div class="ui basic label">
+                                    <div class="badge badge-sm badge-outline">
                                         {{ item }}
                                     </div>                                   
                                 </li>
@@ -65,13 +69,14 @@
     {% if worker_name == 'cron-queue' %}
         <div class="mt-8">
             {% if demo_mode != true %}
-            <button class="ui mini basic icon labeled button" id="run_cron_command">
-                <i class="icon play"></i>
+            <button class="{{ theme.buttons.default }}" id="run_cron_command">          
                 {{ buttons.test }}
             </button>
             {% endif %}
         </div>      
-        <div class="mt-4" id="worker_test_result">
+        <div 
+            class="mt-4" 
+            id="worker_test_result">
         </div>
     {% endif %}
 </div>    

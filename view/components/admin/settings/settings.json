@@ -1,8 +1,6 @@
 {
-    "title": {
-        "content": "Queue Worker Settings",
-        "icon": "cogs"
-    },
+    "title":"Queue Worker Settings",
+    "icon": "icons~cog",
     "labels": {
         "drivers": "Drivers",
         "driver": "Default Queue Worker"

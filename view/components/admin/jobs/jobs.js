@@ -2,22 +2,18 @@
 
 function Jobs() {
 
-    this.enable = function(uuid, onSuccess, onError) {
-        var data = { 
+    this.enable = function(uuid, onSuccess, onError) {   
+        return arikaim.put('/api/admin/queue/job/status',{ 
             uuid: uuid,
             status: 1 
-        };
-        
-        return arikaim.put('/api/admin/queue/job/status',data,onSuccess,onError)
+        },onSuccess,onError)
     };
 
     this.disable = function(uuid, onSuccess, onError) {
-        var data = { 
+        return arikaim.put('/api/admin/queue/job/status',{ 
             uuid: uuid,
             status: 5 // Suspended 
-        };
-
-        return arikaim.put('/api/admin/queue/job/status',data,onSuccess,onError);           
+        },onSuccess,onError);           
     };
 
     this.deleteCompleted = function(onSuccess, onError) {
@@ -33,12 +29,10 @@ function Jobs() {
     };
 
     this.updateInterval = function(uuid, interval, onSuccess, onError) {
-        var data = {
+        return arikaim.put('/api/admin/queue/job/config/interval',{
             uuid: uuid,
             interval: interval
-        };
-
-        return arikaim.put('/api/admin/queue/job/config/interval',data,onSuccess,onError);      
+        },onSuccess,onError);      
     };
 
     this.run = function(formId, onSuccess, onError) {
@@ -53,13 +47,13 @@ function Jobs() {
 var jobs = new Jobs();
 
 arikaim.component.onLoaded(function() {
-    $('#extensions_dropdown').dropdown({
-        onChange: function(name) {              
-            arikaim.page.loadContent({
-                id: 'jobs_view_content',
-                component: "queue::admin.jobs.view",
-                params: { package_name : name }               
-            });     
-        }
+    $('#extensions_dropdown').on('change', function() {
+        var name = $(this).val();
+        
+        arikaim.page.loadContent({
+            id: 'jobs_view_content',
+            component: "queue::admin.jobs.view",
+            params: { package_name : name }               
+        });           
     });
 });

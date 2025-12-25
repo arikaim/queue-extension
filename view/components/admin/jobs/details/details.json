@@ -1,6 +1,6 @@
 {
     "title": "Job Details",
-    "icon": "info",
+    "icon": "icons~info",
     "labels": {
         "id": "Id",
         "name": "Name",

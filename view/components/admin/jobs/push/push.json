@@ -1,6 +1,6 @@
 {
     "title": "Push Job",
-    "icon": "plus",
+    "icon": "icons~plus",
     "labels": {
         "job": "Job",      
         "properties": "Properties"

@@ -10,19 +10,15 @@ function WorkerManager() {
     var self = this;
 
     this.start = function(name, onSuccess, onError) {
-        var data = {
+        return arikaim.put('/api/admin/queue/start', {
             name: name
-        };
-
-        return arikaim.put('/api/admin/queue/start',data,onSuccess,onError);          
+        },onSuccess,onError);          
     };
 
     this.stop = function(name, onSuccess, onError) {
-        var data = {
+        return arikaim.put('/api/admin/queue/stop',{
             name: name
-        };
-
-        return arikaim.put('/api/admin/queue/stop',data,onSuccess,onError);          
+        },onSuccess,onError);          
     };
 
     this.runCronCommand = function(onSuccess, onError) {

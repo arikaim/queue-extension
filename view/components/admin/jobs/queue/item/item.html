@@ -23,8 +23,7 @@
                     </div>      
                     {{ component('queue::admin.interval.label',{ interval: job.recuring_interval }) }}                         
                 {% endif %}   
-                <div class="text-gray-600 mini basic right floated">
-                    <i class="icon outline calendar"></i>
+                <div class="text-gray-600 mini basic right floated">                 
                     {{ job.date_created|dateTimeFormat }}
                 </div>    
                 {{ component('queue::admin.queue.jobs.status.label',{ status: job.status, class: 'mini basic right floated' }) }} 

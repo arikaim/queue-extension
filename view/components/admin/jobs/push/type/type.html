@@ -1,42 +1,54 @@
-<div class="field">
-    <label>
+<div class="{{ theme.form.field }}">
+    <label class="{{ theme.form.label }}">
         {{ title|default(labels.type) }}
-    </label>
-    <div>
-        <div class="field">
-            <div class="ui radio checkbox checked type-checkbox">
-                <input type="radio" name="type" value="single" checked class="hidden">
-                <label>
-                    {{ type.single }}
-                </label>
-            </div>    
+    </label>    
+    <div class="my-2 {{ theme.form.field }}">
+        <div class="flex flex-row items-center type-checkbox">
+            <input 
+                type="radio" 
+                name="type" 
+                value="single" 
+                checked 
+                class="radio radio-sm">
+            <label class="mx-2 {{ theme.form.label }}">
+                {{ type.single }}
+            </label>
+        </div>    
+        
+    </div>
+    <div class="my-2 {{ theme.form.field }}">
+            <div class="flex flex-row items-center type-checkbox">
+            <input 
+                type="radio" 
+                name="type" 
+                value="recurring" 
+                class="radio radio-sm">
+            <label class="mx-2 {{ theme.form.label }}">
+                {{ type.recurring }}
+            </label>
         </div>
-        <div class="field">
-            <div class="ui radio checkbox type-checkbox">
-                <input type="radio" name="type" value="recurring" class="hidden">
-                <label>
-                    {{ type.recurring }}
-                </label>
-            </div>
-            <div class="ml-8 w-1/2">                 
-                {{ component('queue::admin.interval',{ class: 'fluid mini selection' }) }}
-            </div>
-        </div>
-        <div class="field">
-            <div class="ui radio checkbox type-checkbox">
-                <input type="radio" name="type" value="scheduled" class="hidden">
-                <label>
-                    {{ type.scheduled }}
-                </label>
-            </div>
-            <div class="ml-8 w-1/2">
-                {{  component('semantic~form.fields.calendar',{
-                        id: 'schedule_time_calendar',
-                        field_name: 'schedule_time',
-                        field_value: today()
-                    }) 
-                }}   
-            </div>
+        <div class="ml-8 ">                 
+            {{ component('queue::admin.interval',{ class: '' }) }}
         </div>
     </div>
+    <div class="my-2 {{ theme.form.field }}">
+        <div class="flex flex-row items-center type-checkbox type-checkbox">
+            <input 
+                type="radio" 
+                name="type" 
+                value="scheduled" 
+                class="radio radio-sm">
+            <label class="mx-2 {{ theme.form.label }}">
+                {{ type.scheduled }}
+            </label>
+        </div>
+        <div class="ml-8 w-1/2">
+            {{  component('system:form.fields.calendar',{
+                    id: 'schedule_time_calendar',
+                    field_name: 'schedule_time',
+                    field_value: today()
+                }) 
+            }}   
+        </div>
+    </div>    
 </div>

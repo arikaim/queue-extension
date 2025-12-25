@@ -1,11 +1,29 @@
-{{  component('semantic~tabs',{ 
+{{  component('system:admin.tabs',{ 
         items: [         
-            { id: 'queue_button', title: labels.queue, component: 'queue::admin.queue', icon: 'tasks', active: true },
-            { id: 'worker_button', title: labels.worker, component: 'queue::admin.worker', icon: 'server' },              
-            { id: 'jobs_button', title: labels.jobs, component: 'queue::admin.jobs', icon: 'code' },         
-            { id: 'settings_button', title: labels.settings, component: 'queue::admin.settings', icon: 'cog' }  
+            { 
+                title: labels.queue, 
+                component: 'queue::admin.queue', 
+                icon: 'tasks', 
+                active: true 
+            },
+            { 
+                title: labels.worker, 
+                component: 'queue::admin.worker',               
+                svg_icon: 'icons~server' 
+            },              
+            { 
+                title: labels.jobs, 
+                component: 'queue::admin.jobs', 
+                svg_icon: 'icons~code'                
+            },         
+            { 
+                title: labels.settings, 
+                component: 'queue::admin.settings', 
+                svg_icon: 'icons~cog'               
+            }  
         ],
-        menu: { extension: 'queue' },
-        content: { component: 'queue::admin.queue' } 
+        content: { 
+            component: 'queue::admin.queue'
+        } 
     })
 }}
