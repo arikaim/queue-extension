@@ -11,8 +11,7 @@ function JobsView() {
 
     this.init = function() {     
         this.loadMessages('queue::admin');
-        paginator.init('jobs_rows',"queue::admin.queue.jobs.view.items",'jobs'); 
-        
+       
         arikaim.ui.button('.delete-completed',function(element) {
             modal.confirmDelete({ 
                 title: self.getMessage('completed.title'),

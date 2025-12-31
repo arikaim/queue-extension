@@ -11,8 +11,7 @@ function JobsRegistryView() {
 
     this.init = function() {     
         this.loadMessages('queue::admin');
-        paginator.init('jobs_registry_rows',"queue::admin.jobs.view.items",'jobs.registry'); 
-        
+      
         this.initRows();
     };
 

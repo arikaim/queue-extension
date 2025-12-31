@@ -6,12 +6,13 @@
         <div class="font-bold px-1">
             {{ labels.driver }}
         </div>
-        {{  component('system:admin.drivers.dropdown',{ 
-                selected: worker_name,
-                category: 'queue.worker', 
-                calss: 'fluid w-full' 
-            }) 
-        }}  
+        <div class="w-1/3">
+            {{  component('system:admin.drivers.dropdown',{ 
+                    selected: worker_name,
+                    category: 'queue.worker'
+                }) 
+            }}  
+        </div>     
     </div>
     <div class="mt-4 {{ theme.panel }}">        
         <div class="flex flex-row items-start w-full" id="worker_status_content">

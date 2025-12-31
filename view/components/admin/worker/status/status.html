@@ -3,18 +3,19 @@
 {% set worker = service('driver').create(worker_name) %} 
 {% set details = worker.getDetails() %}
 <div class="p-2 w-1/2">
-    <h4 class="font-bold text-lg">
-        {% if worker.isRunning() == true %}    
-            <i class="check olive icon" title="{{ labels.running }}"></i>                   
+    <div class="flex flex-row items-center">
+        {% if worker.isRunning() == true %}   
+            {{ component('icons~check',theme.icons.green,'svg') }}                             
         {% else %}  
-            <i class="exclamation triangle orange icon" title="{{ labels.disabled }}"></i>
+            {{ component('icons~close',theme.icons.delete,'svg') }}              
         {% endif %}
-        {{ worker.getTitle() }}
-    </h4>
+        <h4 class="ml-2 font-bold text-lg">
+            {{ worker.getTitle() }}
+        </h4>        
+    </div>
     <p class="mt-4">
         {{ worker.getDescription() }}
     </p>
-
     {% if demo_mode == true %}
         <div class="mt-4 alert alert-warning alert-sm">
             {{ labels.demo }}

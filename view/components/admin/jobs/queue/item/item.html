@@ -1,7 +1,9 @@
 {% if uuid is not empty %}
     {% set job = createModel('Queue').findById(uuid) %}
 {% endif %}
-<div class="item" id="row_{{ job.uuid }}">
+<div 
+    class="item" 
+    id="row_{{ job.uuid }}">
     <div class="content">                      
         <div class="flex flex-row items-center">
             <div class="flex-grow flex flex-row items-center">

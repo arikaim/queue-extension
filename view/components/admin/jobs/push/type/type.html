@@ -42,11 +42,11 @@
                 {{ type.scheduled }}
             </label>
         </div>
-        <div class="ml-8 w-1/2">
-            {{  component('system:form.fields.calendar',{
+        <div class="ml-8 w-full">
+            {{  component('system:form.fields.date',{
                     id: 'schedule_time_calendar',
-                    field_name: 'schedule_time',
-                    field_value: today()
+                    name: 'schedule_time',
+                    value: today()|dateFormat
                 }) 
             }}   
         </div>

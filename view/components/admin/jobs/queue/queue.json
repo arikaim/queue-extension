@@ -1,6 +1,5 @@
 {
     "title": "Job in queue",
-    
     "labels": {
         "job": "Job",
         "queue": "Queue"

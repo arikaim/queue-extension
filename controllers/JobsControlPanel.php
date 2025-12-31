@@ -212,6 +212,7 @@ class JobsControlPanel extends ControlPanelApiController
     public function push($request, $response, $data)
     {
         $data
+            ->addFilter('schedule_time','Timestamp')
             ->validate(true);  
       
         $uuid = $data->get('uuid');           

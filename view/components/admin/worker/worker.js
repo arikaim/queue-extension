@@ -40,10 +40,9 @@ function WorkerManager() {
     };
 
     this.init = function() {     
-        $('#drivers_dropdown').dropdown({
-            onChange: function(value) {          
-                self.loadWorkerStatus(value);                       
-            }
+        $('#drivers_dropdown').on('change', function() {
+            var name = $(this).val();
+            self.loadWorkerStatus(name);                       
         });
         
         arikaim.ui.button('#start_worker',function(element) {

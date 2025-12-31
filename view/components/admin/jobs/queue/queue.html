@@ -7,11 +7,11 @@
 {% component 'system:admin.panel' %}   
     {% set size = 'w-1/2' %}
     <div class="mt-2">
-        <h4>
+        <h4 class="font-bold">
             {{ labels.job }}
         </h4>
         {{ item.title }}
-        <div class="ui basic label">
+        <div class="badge badge-sm badge-outline">
             {{ item.name }}
         </div>
         <p class="py-1">
@@ -20,7 +20,7 @@
         <h4>
             {{ labels.queue }}
         </h4>
-        <div class="ui middle aligned divided relaxed list">
+        <div class="{{ theme.list.default }}">
             {% if queued_jobs|length == 0 %}
                 ...
             {% endif %}

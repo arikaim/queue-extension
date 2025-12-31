@@ -6,12 +6,23 @@
     <div class="ml-4 flex-grow w-full">
         <div 
             class="{{ theme.grid.five }}" 
-            id="jobs_registry_rows" 
-            component="queue::admin.jobs.view.items">        
-            {{ component('queue::admin.jobs.view.items',{ package_name: package_name }) }}                   
+            id="jobs_registry_rows">        
+            {{  component('queue::admin.jobs.view.items',{ 
+                    package_name: package_name 
+                }) 
+            }}                   
         </div>
-        <div id="paginator">
-            {{ component('semantic~paginator',{ namespace: 'jobs.registry' }) }}
+        <div class="ml-2 mt-2" id="paginator">
+            {{  component("system:admin.paginator",{ 
+                    id: 'jobs_paginator',
+                    namespace: 'jobs.registry',
+                    rows_selector: 'jobs_registry_rows',
+                    params: { 
+                        package_name: package_name 
+                    },
+                    component:"queue::admin.jobs.view.items" 
+                })  
+            }}         
         </div>
     </div>   
 </div>

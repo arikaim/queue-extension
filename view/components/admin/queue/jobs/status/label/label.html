@@ -6,23 +6,23 @@
     {% set label = labels.created %}
 {% elseif status == constant('Arikaim\\Core\\Interfaces\\Job\\JobInterface::STATUS_PENDING') %}
     {% set label = labels.pending %}
-    {% set color = 'blue' %}
+    {% set color = 'badge-info' %}
 {% elseif status == constant('Arikaim\\Core\\Interfaces\\Job\\JobInterface::STATUS_COMPLETED') %}
     {% set label = labels.completed %}
-    {% set color = 'green' %}
+    {% set color = 'badge-success' %}
 {% elseif status == constant('Arikaim\\Core\\Interfaces\\Job\\JobInterface::STATUS_EXECUTED') %}
     {% set label = labels.executed %}
-    {% set color = 'olive' %}
+    {% set color = 'badge-success' %}
 {% elseif status == constant('Arikaim\\Core\\Interfaces\\Job\\JobInterface::STATUS_SUSPENDED') %}
     {% set label = labels.suspended %}
-    {% set color = 'orange' %} 
+    {% set color = 'badge-warning' %} 
 {% elseif status == constant('Arikaim\\Core\\Interfaces\\Job\\JobInterface::STATUS_ERROR') %}
     {% set label = labels.error %}
-    {% set color = 'red' %}   
+    {% set color = 'badge-error' %}   
 {% endif %}
-<div class="ui label {{ color }} {{ class }}">
+<div class="badge badge-sm {{ color }} {{ class }}">
     {% if icon is not empty %}
-        <i class="icon {{ icon }}"></i>
+        
     {% endif %}
     {% if title is not empty %}
         <span class="p-1 font-bold">{{ title }}</span>
