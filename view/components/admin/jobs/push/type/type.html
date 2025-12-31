@@ -9,7 +9,7 @@
                 name="type" 
                 value="single" 
                 checked 
-                class="radio radio-sm">
+                class="radio radio-xs">
             <label class="mx-2 {{ theme.form.label }}">
                 {{ type.single }}
             </label>
@@ -22,7 +22,7 @@
                 type="radio" 
                 name="type" 
                 value="recurring" 
-                class="radio radio-sm">
+                class="radio radio-xs">
             <label class="mx-2 {{ theme.form.label }}">
                 {{ type.recurring }}
             </label>
@@ -37,7 +37,7 @@
                 type="radio" 
                 name="type" 
                 value="scheduled" 
-                class="radio radio-sm">
+                class="radio radio-xs">
             <label class="mx-2 {{ theme.form.label }}">
                 {{ type.scheduled }}
             </label>
@@ -46,6 +46,7 @@
             {{  component('system:form.fields.date',{
                     id: 'schedule_time_calendar',
                     name: 'schedule_time',
+                    class: 'input-sm',
                     value: today()|dateFormat
                 }) 
             }}   

@@ -1,128 +1,142 @@
 {% set job = service('queue').getJob(uuid) %}
-<div>
-    <h4>{{ title }}</h4>
+{% component 'system:admin.panel' %}      
     {% if job.status == constant('Arikaim\\Core\\Interfaces\\Job\\JobInterface::STATUS_SUSPENDED') %}
-        <button class="ui basic icon labeled mini button enable-job" uuid="{{ job.uuid }}">
+        <button class="{{ theme.buttons.green }} enable-job" uuid="{{ job.uuid }}">
             <i class="icon check green"></i>
             {{ labels.enable }}
         </button>
     {% elseif job.status != constant('Arikaim\\Core\\Interfaces\\Job\\JobInterface::STATUS_COMPLETED') %}
-        <button class="ui basic icon labeled mini button suspend-job" uuid="{{ job.uuid }}">
+        <button class="{{ theme.buttons.delete }} suspend-job" uuid="{{ job.uuid }}">
             <i class="icon orange stop"></i>
             {{ labels.suspend }}
         </button>
     {% endif %}   
     <div class="mt-2">
-        <table class="ui very basic definition table">
+        <table class="{{ theme.table.details }}">
             <thead>
                 <tr>
-                    <th class="two wide"></th>
-                    <th></th>
+                    <th class="w-1/4"></th>
+                    <th class="w-3/4"></th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td class="right aligned">{{ labels.id }}</td>
+                    <td class="{{ theme.table.field.label }}">{{ labels.id }}</td>
                     <td>{{ job.uuid }}</td>
                 </tr>
                 <tr>
-                    <td class="right aligned">{{ labels.name }}</td>
+                    <td class="{{ theme.table.field.label }}">{{ labels.name }}</td>
                     <td>
                         {{ job.name }}
                     </td>
                 </tr>
                 <tr>
-                    <td class="right aligned">{{ labels.status }}</td>
+                    <td class="{{ theme.table.field.label }}">
+                        {{ labels.status }}
+                    </td>
                     <td>
                         {{  component('queue::admin.queue.jobs.status.label',{ 
                                 status: job.status, 
-                                class: 'mini basic right floated' 
+                                class: 'badge-xs' 
                             }) 
                         }}  
                     </td>
                 </tr>
                 <tr>
-                    <td class="right aligned">{{ labels.type }}</td>
-                    <td>
+                    <td class="{{ theme.table.field.label }}">{{ labels.type }}</td>
+                    <td class="flex flex-row items-center">
                         {% if job.recuring_interval is not empty %}
-                            <span>{{ labels.recurring }}</span>
+                            <div class="px-2 font-bold">{{ labels.recurring }}</div>
                             {{ component('queue::admin.interval.label',{ interval: job.recuring_interval }) }}                                                                                                        
                         {% elseif job.schedule_time is not empty %}
-                            <span>{{ labels.scheduled }}</span>
-                            <div class="ui basic label">
-                                <i class="icon blue outline calendar"></i>
-                                {{ job.schedule_time|dateTimeFormat }}
+                            <div class="px-2 font-bold">{{ labels.scheduled }}</div>
+                            <div class="flex flex-row items-center">
+                                {{ component('icons~calendar',theme.icons.blue,'svg') }}
+                                <div class="mx-2">
+                                    {{ job.schedule_time|dateTimeFormat }}
+                                </div>                               
                             </div>
                         {% else %}
-                            <span>{{ labels.single }}</span>
+                            <div class="px-2 font-bold">{{ labels.single }}</div>
                         {% endif %}                     
                         {% if job.due_date is not empty %}
-                            <div class="ui basic label">
-                                <span>{{ labels.nextrun }}</span>                               
-                                <div class="detail">
-                                    <i class="icon outline calendar blue"></i>
-                                    {{ job.due_date|dateTimeFormat }}
+                            <div class="flex flex-row items-center">
+                                <div class="px-2 font-bold">
+                                    {{ labels.nextrun }}
+                                </div>                               
+                                <div class="flex flex-row items-center">
+                                    {{ component('icons~calendar',theme.icons.blue,'svg') }}
+                                    <div class="mx-2">
+                                        {{ job.due_date|dateTimeFormat }}
+                                    </div>                                  
                                 </div>
                             </div>
                         {% endif %} 
                     </td>
                 </tr>
                 <tr>
-                    <td class="right aligned">{{ labels.current }}</td>
-                    <td>
-                        <i class="icon outline calendar blue"></i>
-                        {{ today()|dateTimeFormat }}
+                    <td class="{{ theme.table.field.label }}">
+                        {{ labels.current }}
+                    </td>
+                    <td class="flex flex-row items-center">
+                        {{ component('icons~calendar',theme.icons.blue,'svg') }}
+                        <div class="mx-2">
+                            {{ today()|dateTimeFormat }}
+                        </div>                        
                     </td>
                 </tr>
                 <tr>
-                    <td class="right aligned">{{ labels.priority }}</td>
+                    <td class="{{ theme.table.field.label }}">{{ labels.priority }}</td>
                     <td>
                         {{ job.priority }}
                     </td>
                 </tr>
                 <tr>
-                    <td class="right aligned">{{ labels.date }}</td>
+                    <td class="{{ theme.table.field.label }}">{{ labels.date }}</td>
                     <td>
                         {{ job.date_created|dateTimeFormat }}
                     </td>
                 </tr>
                 {% if job.date_executed is not empty %}
                 <tr>
-                    <td class="right aligned">{{ labels.executed }}</td>
-                    <td>
+                    <td class="{{ theme.table.field.label }}">
+                        {{ labels.executed }}
+                    </td>
+                    <td class="flex flex-row items-center">
                         {% if job.executed > 0 %}
-                        <div class="ui basic label">
+                        <div class="badge badge-sm badge-outline">
                             {{ job.executed }}
                         </div>
                         {% endif %}
-                        <div class="ui basic label">
-                            <i class="icon blue outline calendar"></i>
-                            {{ job.date_executed|dateTimeFormat }}
+                        <div class="ml-2 flex flex-row items-center">
+                            {{ component('icons~calendar',theme.icons.blue,'svg') }}
+                            <div class="mx-2">
+                                {{ job.date_executed|dateTimeFormat }}
+                            </div>                           
                         </div>                        
                     </td>
                 </tr>
                 {% endif %}
                 <tr>
-                    <td class="right aligned">{{ labels.handler }}</td>
+                    <td class="{{ theme.table.field.label }}">{{ labels.handler }}</td>
                     <td>
                         {{ job.handler_class }}
                     </td>
                 </tr>
                 <tr>
-                    <td class="right aligned">{{ labels.extension }}</td>
+                    <td class="{{ theme.table.field.label }}">{{ labels.extension }}</td>
                     <td>
-                        {{ job.extension_name}}
+                        {{ job.extension_name }}
                     </td>
                 </tr>  
                  <tr>
-                    <td class="right aligned">{{ labels.user }}</td>
-                    <td>
-                      
+                    <td class="{{ theme.table.field.label }}">{{ labels.user }}</td>
+                    <td>                      
                         {{ job.user_id }}
                     </td>
                 </tr>  
                 <tr>
-                    <td class="right aligned">{{ labels.worker }}</td>
+                    <td class="{{ theme.table.field.label }}">{{ labels.worker }}</td>
                     <td>
                         {{ (job.queue is null) ? labels.all : job.queue }}
                     </td>
@@ -131,6 +145,8 @@
         </table>     
     </div>
     <div class="mt-2" id="job_config_content">             
-        {{ component('semantic~options',{ options: job.options }) }}                      
+        {{ component('system:admin.options',{ options: job.options }) }}                      
     </div>
 </div>
+
+{% endcomponent %}
