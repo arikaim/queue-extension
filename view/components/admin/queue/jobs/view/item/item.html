@@ -4,27 +4,26 @@
 <div 
     class="flex flex-row items-center" 
     id="row_{{ job.uuid }}">               
-    <div class="flex-grow flex flex-row items-center">
-        {{ component('icons~code',theme.icons.blue,'svg') }}                     
-        
-        {% if job.recuring_interval is not empty %}
-            <div class="px-2">
-                <i class="redo alternate icon blue" title="{{ labels.recurring }}"></i>
-            </div>                
-            <button 
-                class="{{ theme.buttons.icon }} btn-xs edit-job" 
-                uuid="{{ job.uuid }}">
-                {{ component('icons~edit',theme.icons.green,'svg') }}       
-            </button>              
-        {% endif %}
+    <div class="flex-grow flex flex-row items-center">        
         <button 
             class="mx-2 {{ theme.buttons.icon }} btn-xs delete-job" 
             data-title="{{ job.name }}"
             uuid="{{ job.uuid }}">
             {{ component('icons~trash',theme.icons.delete,'svg') }}       
-        </button>
-        {% if job.schedule_time is not empty %}
-            {{ component('icons~calendar',theme.icons.blue,'svg') }}                                                                                                                           
+        </button>       
+        {% if job.recuring_interval is not empty %}
+            <div class="px-2">
+                {{ component('icons~code',theme.icons.blue,'svg') }}                              
+            </div>                
+            <button 
+                class="{{ theme.buttons.icon }} btn-xs edit-job" 
+                uuid="{{ job.uuid }}">
+                {{ component('icons~edit',theme.icons.green,'svg') }}       
+            </button>                    
+        {% elseif job.schedule_time is not empty %}
+            {{ component('icons~calendar',theme.icons.blue,'svg') }}   
+        {% else %}      
+            {{ component('icons~chevron.right',theme.icons.blue,'svg') }}                                                                                                             
         {% endif %}
         <a class="link job-details font-bold mx-2" uuid="{{ job.uuid }}">
             {{ job.name }}  
@@ -35,7 +34,6 @@
         <div class="mx-2">
               {{ job.date_created|dateTimeFormat }}            
         </div>          
-      
         {{  component('queue::admin.queue.jobs.status.label',{ 
                 status: job.status, 
                 class: 'badge-outline mx-2' 

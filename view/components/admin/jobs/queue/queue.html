@@ -5,7 +5,7 @@
 {% set queued_jobs = service('queue').getJobsDue(item.name) %}
 
 {% component 'system:admin.panel' %}   
-    {% set size = 'w-1/2' %}
+    {% set size = 'w-full' %}
     <div class="mt-2">
         <h4 class="font-bold">
             {{ labels.job }}
@@ -14,15 +14,15 @@
         <div class="badge badge-sm badge-outline">
             {{ item.name }}
         </div>
-        <p class="py-1">
+        <p class="my-1">
             {{ job.descriptor().getValue('description') }}
         </p>
-        <h4>
+        <h4 class="font-bold my-2">
             {{ labels.queue }}
         </h4>
         <div class="{{ theme.list.default }}">
             {% if queued_jobs|length == 0 %}
-                ...
+                <div class="p-2">...</div>
             {% endif %}
             {% for job in queued_jobs %}
                 {{ component('queue::admin.jobs.queue.item',{ job: job }) }}   

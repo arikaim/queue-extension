@@ -11,7 +11,6 @@ function JobsRegistryView() {
 
     this.init = function() {     
         this.loadMessages('queue::admin');
-      
         this.initRows();
     };
 
@@ -35,7 +34,6 @@ function JobsRegistryView() {
     };
 
     this.initDetails = function() {
-
         arikaim.ui.button('.run-job',function(element) {
             var uuid = $(element).attr('uuid');
 
@@ -43,7 +41,6 @@ function JobsRegistryView() {
                 self.loadDetails(result.uuid);                
             });
         });
-
     };
 
     this.initRows = function() {        

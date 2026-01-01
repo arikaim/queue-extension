@@ -2,34 +2,33 @@
     {% set job = createModel('Queue').findById(uuid) %}
 {% endif %}
 <div 
-    class="item" 
+    class="flex flex-col items-start w-full" 
     id="row_{{ job.uuid }}">
-    <div class="content">                      
-        <div class="flex flex-row items-center">
-            <div class="flex-grow flex flex-row items-center">
-                <div>
-                    <i class="icon blue angle right"></i>          
-                </div>
-                          
-                {% if job.schedule_time is not empty %}
-                    <i class="calendar alternate outline icon" title="{{ labels.scheduled }}"></i>
-                {% endif %}
-                <span class="link job-details font-bold px-2" uuid="{{ job.uuid }}">
-                    {{ job.name }}  
-                </span>                           
-            </div>
-            <div class="flex flex-row items-center">
-                {% if job.recuring_interval is not empty %}
-                    <div class="px-1">
-                        <i class="redo alternate icon blue" title="{{ labels.recurring }}"></i>
-                    </div>      
-                    {{ component('queue::admin.interval.label',{ interval: job.recuring_interval }) }}                         
-                {% endif %}   
-                <div class="text-gray-600 mini basic right floated">                 
-                    {{ job.date_created|dateTimeFormat }}
-                </div>    
-                {{ component('queue::admin.queue.jobs.status.label',{ status: job.status, class: 'mini basic right floated' }) }} 
-            </div>
-        </div>                               
-    </div>     
+    <div   
+        class="flex-grow flex flex-row items-center w-full">
+        <div>
+            {{ component('icons~chevron.right',theme.icons.green,'svg') }}                  
+        </div>                    
+        {% if job.schedule_time is not empty %}
+            {{ component('icons~calendar',theme.icons.green,'svg') }}            
+        {% endif %}
+        <div           
+            class="flex-grow link job-details font-bold px-2" uuid="{{ job.uuid }}">
+            {{ job.name }}  
+        </div>      
+        <div class="place-content-end">
+            {{ component('queue::admin.queue.jobs.status.label',{ status: job.status }) }}                
+        </div>            
+    </div>
+    <div class="mt-1 flex flex-row items-center w-full">
+        {% if job.recuring_interval is not empty %}
+            <div class="px-1" title="{{ labels.recurring }}">
+                {{ component('icons~calendar',theme.icons.green,'svg') }}                    
+            </div>      
+            {{ component('queue::admin.interval.label',{ interval: job.recuring_interval }) }}                         
+        {% endif %}   
+        <div class="flex-grow self-end text-gray-600 mx-2 text-sm">                 
+            {{ job.date_created|dateTimeFormat }}
+        </div>           
+    </div>                    
 </div>

@@ -11,7 +11,7 @@
     "repository": "https://github.com/arikaim/queue-extension.git",
     "admin-menu": {        
         "title": "Jobs Queue",
-        "icon": "cogs",       
+        "svg_icon": "icons~collection", 
         "page-icon": "cogs",
         "page-title": "Jobs Queue", 
         "component": "queue::admin"

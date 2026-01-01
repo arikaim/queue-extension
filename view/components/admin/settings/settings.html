@@ -1,27 +1,32 @@
-{% component 'system:admin.panel' %}
-    {% set size = 'w-1/3' %}
-    {% set hide_close = true %}
-    {% set queue_worker = getOption('queue.worker.name') %}
-    <div class="mt-8">      
-        <h4 class="font-bold">
-            {{ labels.driver }}
-        </h4>      
-        {{  component('system:admin.drivers.dropdown',{ 
-                selected: queue_worker, 
-                category: 'queue.worker', 
-                calss: '' 
-            }) 
-        }}
-        <div class="horizontal divider my-4">
-            {{ labels.drivers }}
-        </div>
-        <div id="driver_config">
-            {{  component('system:admin.drivers.list',{ 
-                    category: 'queue.worker', 
-                    current : queue_worker, 
-                    buttons: buttons 
-                }) 
-            }}
-        </div>
+<div class="flex flex-row items-start">
+    <div class="w-1/3">
+        {% component 'system:admin.panel' %} 
+            {% set hide_close = true %}
+            {% set queue_worker = getOption('queue.worker.name') %}
+            <div class="mt-8">      
+                <h4 class="font-bold">
+                    {{ labels.driver }}
+                </h4>      
+                {{  component('system:admin.drivers.dropdown',{ 
+                        selected: queue_worker, 
+                        category: 'queue.worker', 
+                        calss: '' 
+                    }) 
+                }}
+                <div class="horizontal divider my-4">
+                    {{ labels.drivers }}
+                </div>
+                <div class="mt-2">
+                    {{  component('system:admin.drivers.list',{ 
+                            category: 'queue.worker', 
+                            current : queue_worker, 
+                            buttons: buttons 
+                        }) 
+                    }}
+                </div>
+            </div>
+        {% endcomponent %}
     </div>
-{% endcomponent %}
+    <div class="w-1/3 ml-4" id="driver_config">
+    </div>
+</div>

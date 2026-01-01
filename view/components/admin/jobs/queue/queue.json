@@ -1,12 +1,8 @@
 {
     "title": "Job in queue",
+    "icon": "icons~info",
     "labels": {
         "job": "Job",
         "queue": "Queue"
-    },
-    "type": {
-        "single": "Run once",
-        "recurring": "Recurring",
-        "scheduled": "Scheduled"
-    }   
+    }
 }
