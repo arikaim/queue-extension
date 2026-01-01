@@ -4,3 +4,9 @@
 {% else %}
     {{ component('queue::admin.queue.jobs.view',{ worker_name: worker_name }) }} 
 {% endif %}
+
+{{  component('system:admin.modal.confirm',{
+        id: 'queue_delete_job',
+        content: messages.delete
+    }) 
+}}

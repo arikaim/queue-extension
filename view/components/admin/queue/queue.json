@@ -1,6 +1,7 @@
 {
     "title": "Queue",
     "message": "No jobs in queue.",
-    "labels": {        
+    "messages": {    
+        "delete": "Confirm remove job from queue"
     }
 }

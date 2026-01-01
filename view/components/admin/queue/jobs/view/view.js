@@ -13,15 +13,15 @@ function JobsView() {
         this.loadMessages('queue::admin');
        
         arikaim.ui.button('.delete-completed',function(element) {
-            modal.confirmDelete({ 
-                title: self.getMessage('completed.title'),
-                description: self.getMessage('completed.content')
-            },function() {
+            arikaim.ui.getComponent('queue_delete_job').open(function() {
                 jobs.deleteCompleted(function(result) {
                     self.loaItems();
                 });
-            });
+            },
+            self.getMessage('completed.content'));
         });
+
+        this.initRows();
     };
 
     this.loaItems = function() {
@@ -87,13 +87,10 @@ function JobsView() {
             var title = $(element).attr('data-title');
             var message = arikaim.ui.template.render(self.getMessage('remove.content'),{ title: title });
 
-            modal.confirmDelete({ 
-                title: self.getMessage('remove.title'),
-                description: message
-            },function() {
+            arikaim.ui.getComponent('queue_delete_job').open(function() {
                 jobs.delete(uuid,function(result) {
                     arikaim.ui.table.removeRow('#row_' + uuid);     
-                    arikaim.page.toastMessage(result.message);
+                    arikaim.ui.getComponent('toast').show(result.message);
                 });               
             });           
         });
@@ -116,6 +113,5 @@ function JobsView() {
 var jobsView = createObject(JobsView,ControlPanelView);
 
 arikaim.component.onLoaded(function() {
-    jobsView.init();
-    jobsView.initRows();
+    jobsView.init();    
 });
